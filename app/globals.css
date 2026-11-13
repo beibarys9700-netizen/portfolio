@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { --paper: 243 241 236; --ink: 22 21 26; --sage: 185 190 181; }
+.dark { --paper: 22 21 26; --ink: 243 241 236; --sage: 52 56 54; }
+
+html { background: rgb(var(--paper)); }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+body {
+  font-family: "Helvetica Neue", "Inter", Arial, sans-serif;
+  color: rgb(var(--ink));
+  background: rgb(var(--paper));
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection { background: #4B5BFF; color: #fff; }
+
+/* переключение темы через View Transitions (анимацию задаёт ThemeToggler) */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+.spin-slow { animation: spin 14s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
