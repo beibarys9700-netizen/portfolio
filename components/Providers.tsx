@@ -2,6 +2,9 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import Lenis from "lenis";
 import { Lang, dict } from "@/lib/content";
+import Preloader from "./Preloader";
+import SmartCursor from "./SmartCursor";
+import { SoundFx } from "./Sound";
 
 const LangCtx = createContext<{ lang: Lang; setLang: (l: Lang) => void }>({ lang: "en", setLang: () => {} });
 export const useT = () => {
@@ -24,6 +27,13 @@ export default function Providers({ children }: { children: ReactNode }) {
     return () => { cancelAnimationFrame(id); lenis.destroy(); };
   }, []);
 
-  return <LangCtx.Provider value={{ lang, setLang }}>{children}</LangCtx.Provider>;
+  return (
+    <LangCtx.Provider value={{ lang, setLang }}>
+      <Preloader />
+      <SmartCursor />
+      <SoundFx />
+      {children}
+    </LangCtx.Provider>
+  );
 }
 

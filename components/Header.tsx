@@ -6,6 +6,7 @@ import { site, langs } from "@/lib/content";
 import { useT } from "./Providers";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { RollText } from "@/components/ui/roll-text";
+import { SoundToggle } from "./Sound";
 
 export default function Header() {
   const { t, lang, setLang } = useT();
@@ -26,6 +27,7 @@ export default function Header() {
               <button key={l} onClick={() => setLang(l)} className={`uppercase transition-opacity ${l === lang ? "opacity-100" : "opacity-50 hover:opacity-100"}`}>{l}</button>
             ))}
           </div>
+          <SoundToggle />
           <AnimatedThemeToggler variant="star" />
           <nav className="hidden md:flex gap-10">
             {links.map((l) => <Link key={l.href} href={l.href} className="group"><RollText>{l.label}</RollText></Link>)}

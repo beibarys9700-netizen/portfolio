@@ -13,7 +13,7 @@ export default function Contact() {
       </Reveal>
       <div className="mt-12 flex flex-wrap items-center gap-8">
         <Magnetic href={`mailto:${site.email}`} className="w-36 h-36 !bg-accent hover:!bg-paper hover:!text-ink">{t.contactBtn}</Magnetic>
-        <a href={`mailto:${site.email}`} className="text-xl md:text-3xl underline underline-offset-8 decoration-paper/30 hover:decoration-accent">{site.email}</a>
+        <a href={`mailto:${site.email}`} data-copy={site.email} className="text-xl md:text-3xl underline underline-offset-8 decoration-paper/30 hover:decoration-accent">{site.email}</a>
       </div>
       <div className="mt-24 flex flex-wrap justify-between gap-4 text-sm text-paper/60">
         <div className="flex gap-6">{site.socials.map((s) => <a key={s.label} href={s.href} className="hover:text-paper">{s.label}</a>)}</div>

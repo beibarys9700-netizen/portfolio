@@ -7,28 +7,28 @@ import Reveal from "./Reveal";
 import Magnetic from "./Magnetic";
 import { TextAnimate } from "@/components/ui/text-animate";
 import { RollText } from "@/components/ui/roll-text";
+import CaseDrawer from "./CaseDrawer";
+import { uiDict } from "@/lib/ui";
 
 export default function Work() {
-  const { t } = useT();
+  const { t, lang } = useT();
+  const ui = uiDict[lang];
+  const [open, setOpen] = useState<number | null>(null);
   const [active, setActive] = useState<number | null>(null);
   const preview = useRef<HTMLDivElement>(null);
   const strip = useRef<HTMLDivElement>(null);
-  const cursor = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    gsap.set([preview.current, cursor.current], { scale: 0 });
+    gsap.set(preview.current, { scale: 0 });
     const px = gsap.quickTo(preview.current, "x", { duration: 0.6, ease: "power3" });
     const py = gsap.quickTo(preview.current, "y", { duration: 0.6, ease: "power3" });
-    const cx = gsap.quickTo(cursor.current, "x", { duration: 0.35, ease: "power3" });
-    const cy = gsap.quickTo(cursor.current, "y", { duration: 0.35, ease: "power3" });
-    const move = (e: MouseEvent) => { px(e.clientX); py(e.clientY); cx(e.clientX); cy(e.clientY); };
+    const move = (e: MouseEvent) => { px(e.clientX); py(e.clientY); };
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
   }, []);
 
   useEffect(() => {
     gsap.to(preview.current, { scale: active === null ? 0 : 1, duration: 0.45, ease: "power3.out" });
-    gsap.to(cursor.current, { scale: active === null ? 0 : 1, duration: 0.45, ease: "power3.out" });
     if (active !== null) gsap.to(strip.current, { yPercent: -(100 / projects.length) * active, duration: 0.6, ease: "power3.out" });
   }, [active]);
 
@@ -47,7 +47,7 @@ export default function Work() {
         {projects.map((p, i) => (
           <li key={p.slug} onMouseEnter={() => setActive(i)} className="border-b border-ink/15">
             <Reveal>
-              <a href={`#${p.slug}`} className={`group flex items-center justify-between py-8 md:py-12 transition-opacity duration-300 ${active !== null && active !== i ? "opacity-30" : "opacity-100"}`}>
+              <a href={`#${p.slug}`} data-cursor={ui.viewCase} onClick={(e) => { e.preventDefault(); setOpen(i); }} className={`group flex items-center justify-between py-8 md:py-12 transition-opacity duration-300 ${active !== null && active !== i ? "opacity-30" : "opacity-100"}`}>
                 <h3 className={`text-6xl md:text-[9vw] leading-none tracking-tighter transition-transform duration-500 ${active === i ? "md:translate-x-6" : ""}`}><RollText step={25}>{p.title}</RollText></h3>
                 <span className="hidden md:block text-base w-64"><RollText step={10}>{t.categories[i % t.categories.length]}</RollText></span>
               </a>
@@ -71,11 +71,7 @@ export default function Work() {
           </div>
         </div>
       </div>
-      <div className="pointer-events-none fixed left-0 top-0 z-40 hidden md:block">
-        <div ref={cursor}>
-          <div className="-translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-accent text-white text-sm flex items-center justify-center">{t.view}</div>
-        </div>
-      </div>
+      <CaseDrawer index={open} onClose={() => setOpen(null)} />
     </section>
   );
 }

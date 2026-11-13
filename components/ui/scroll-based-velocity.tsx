@@ -56,6 +56,7 @@ export function ScrollVelocityRow({
   }, [children]);
 
   const x = useTransform(baseX, (v) => `${wrap(-blockW, 0, v)}px`);
+  const skew = useTransform(smooth, [-1500, 0, 1500], [10, 0, -10], { clamp: true });
 
   useAnimationFrame((_, delta) => {
     let move = dir.current * baseVelocity * 5 * (delta / 1000);
@@ -67,7 +68,7 @@ export function ScrollVelocityRow({
 
   return (
     <div className="w-full overflow-hidden whitespace-nowrap">
-      <motion.div className={cn("inline-flex", className)} style={{ x }}>
+      <motion.div className={cn("inline-flex", className)} style={{ x, skewX: skew }}>
         {Array.from({ length: copies }, (_, i) => (
           <span key={i} ref={i === 0 ? blockRef : undefined} className="block shrink-0 pr-[0.35em]">
             {children}

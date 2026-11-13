@@ -126,3 +126,4 @@ export const aboutDict: Record<Lang, AboutDict> = {
     ctaBtn: "Талқылайық",
   },
 };
+
