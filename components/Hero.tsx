@@ -45,7 +45,7 @@ export default function Hero() {
       </div>
 
       {/* роль */}
-      <div className="absolute z-30 right-6 md:right-[10%] top-[28%] text-3xl md:text-5xl leading-[1.1] tracking-tight">
+      <div className="absolute z-[60] pointer-events-none right-6 md:right-[10%] top-[28%] text-3xl md:text-5xl leading-[1.1] tracking-tight">
         <div className="mb-8 text-3xl">↘</div>
         <div><TextAnimate>{t.role[0]}</TextAnimate></div>
         <div><TextAnimate startDelay={0.6}>{t.role[1]}</TextAnimate></div>

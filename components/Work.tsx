@@ -37,8 +37,8 @@ export default function Work() {
       <div className="grid md:grid-cols-[1fr_1fr] gap-10 mb-24">
         <p className="text-4xl md:text-6xl leading-[1.1] tracking-tight max-w-3xl"><TextAnimate by="word">{t.intro}</TextAnimate></p>
         <Reveal delay={150} className="md:pl-24">
-          <p className="text-base max-w-[280px] leading-snug">{t.introSmall}</p>
-          <Magnetic href="#about" className="mt-12 w-32 h-32">{t.aboutBtn}</Magnetic>
+          <p className="text-base max-w-md leading-relaxed">{t.introSmall}</p>
+          <Magnetic href="/about" className="mt-12 w-32 h-32">{t.aboutBtn}</Magnetic>
         </Reveal>
       </div>
 

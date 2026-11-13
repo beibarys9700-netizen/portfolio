@@ -1,6 +1,7 @@
 "use client";
 import { useRef, ReactNode } from "react";
 import gsap from "gsap";
+import Link from "next/link";
 
 // Круглая кнопка, которая «тянется» за курсором
 export default function Magnetic({ children, className = "", href = "#" }: { children: ReactNode; className?: string; href?: string }) {
@@ -11,10 +12,10 @@ export default function Magnetic({ children, className = "", href = "#" }: { chi
   };
   const leave = () => gsap.to(ref.current, { x: 0, y: 0, duration: 0.9, ease: "elastic.out(1,0.4)" });
   return (
-    <a ref={ref} href={href} onMouseMove={move} onMouseLeave={leave}
+    <Link ref={ref} href={href} onMouseMove={move} onMouseLeave={leave}
       className={`flex items-center justify-center rounded-full bg-ink text-paper text-sm hover:bg-accent transition-colors duration-300 ${className}`}>
       {children}
-    </a>
+    </Link>
   );
 }
 
