@@ -36,3 +36,6 @@ next-env.d.ts
 
 # virtual environments
 .venv*
+
+
+.vercel

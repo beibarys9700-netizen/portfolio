@@ -5,6 +5,7 @@ import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
 import { TextAnimate } from "@/components/ui/text-animate";
 import { ScrollVelocityContainer, ScrollVelocityRow } from "@/components/ui/scroll-based-velocity";
 import Disintegrate from "./Disintegrate";
+import InteractiveBg from "./InteractiveBg";
 
 // Картинка героя: путь и пропорции (ширина / высота)
 const HERO_IMAGE = "/lego.png";
@@ -14,6 +15,7 @@ export default function Hero() {
   const { t } = useT();
   return (
     <section id="top" className="relative h-screen min-h-[640px] bg-sage overflow-hidden text-white">
+      <InteractiveBg />
       {/* Персонаж: 3D-карточка (наклон за курсором) + рассыпание на кусочки при наведении */}
       <div className="absolute inset-x-0 bottom-0 z-10 flex justify-center">
         <CardContainer containerClassName="py-0">
