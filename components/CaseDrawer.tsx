@@ -43,10 +43,8 @@ function Stage({ p, mode }: { p: P; mode: "mobile" | "desktop" }) {
                 <iframe key={`${p.url}-${mode}`} src={p.url} title={p.title} loading="lazy" onLoad={() => setLoaded(true)}
                   className="absolute left-0 top-0 border-0 bg-white"
                   style={{
-                    width: "390px",
-                    height: "800px",
-                    transform: "scale(calc(min(300px, 78vw) / 390))",
-                    transformOrigin: "top left",
+                    width: "100%",
+                    height: "100%",
                     opacity: loaded ? 1 : 0,
                     transition: "opacity .5s",
                   }} />

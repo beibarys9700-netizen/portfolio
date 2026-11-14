@@ -15,9 +15,6 @@ export const langs: Lang[] = ["en", "ru", "kk"];
 // Проекты: image — путь к скриншоту в /public (пока градиент-заглушка)
 export const projects = [
   { slug: "project-one", title: "Nomadique", color: "#4B5BFF", image: "", url: "https://nomadique-one.vercel.app" },
-  { slug: "project-two", title: "Aquasplash", color: "#12A4A0", image: "", url: "https://aquasplash.vercel.app" },
-  { slug: "project-three", title: "Sumka Store", color: "#E8573D", image: "", url: "https://demosumkastore.vercel.app" },
-  { slug: "project-four", title: "Qosymsha", color: "#8A5CF5", image: "", url: "https://qosymsha-azure.vercel.app" },
   { slug: "project-five", title: "Green Clean", color: "#2E9E5B", image: "", url: "https://greencleankz.vercel.app" },
 ];
 
