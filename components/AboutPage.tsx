@@ -1,217 +1,597 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion, useMotionValue, useSpring, useTransform, useScroll, useInView, animate } from "motion/react";
+import { motion } from "motion/react";
 import { useT } from "./Providers";
 import { aboutDict, tools } from "@/lib/about";
-import InteractiveBg from "./InteractiveBg";
-import Reveal from "./Reveal";
-import Magnetic from "./Magnetic";
-import { site } from "@/lib/content";
-import { ScrollVelocityContainer, ScrollVelocityRow } from "@/components/ui/scroll-based-velocity";
+import { site, Lang } from "@/lib/content";
+import { playClick } from "@/lib/sound";
 
-// Слово из букв: каждая буква подпрыгивает и окрашивается при наведении
-function HoverLine({ text, delay = 0, className = "" }: { text: string; delay?: number; className?: string }) {
+// Классические 3D-рамки в стиле Windows 98 / Retro Creative OS
+const winBox =
+  "bg-[#C0C0C0] text-[#0b0b0e] border-2 border-t-[#FFFFFF] border-l-[#FFFFFF] border-r-[#2b2b2b] border-b-[#2b2b2b] shadow-[4px_4px_0_rgba(0,0,0,0.45)]";
+const winInset =
+  "bg-white text-[#0b0b0e] border-2 border-t-[#555555] border-l-[#555555] border-r-[#FFFFFF] border-b-[#FFFFFF]";
+const winBtn =
+  "bg-[#C0C0C0] text-[#0b0b0e] border-2 border-t-[#FFFFFF] border-l-[#FFFFFF] border-r-[#2b2b2b] border-b-[#2b2b2b] active:border-t-[#2b2b2b] active:border-l-[#2b2b2b] active:border-r-[#FFFFFF] active:border-b-[#FFFFFF] active:translate-y-[1px] px-3 py-1 text-xs font-mono font-bold select-none";
+
+const osCopy: Record<
+  Lang,
+  {
+    osTitle: string;
+    startBtn: string;
+    backHome: string;
+    winBio: string;
+    winStats: string;
+    winGallery: string;
+    winLego: string;
+    winSkills: string;
+    winProcess: string;
+    winMessenger: string;
+    roleBadge: string;
+    sloganTitle: string;
+    sloganSub: string;
+    legoHint: string;
+    legoClear: string;
+    galleryHint: string;
+    photos: { title: string; tag: string; caption: string }[];
+    writeWa: string;
+    writeTg: string;
+  }
+> = {
+  en: {
+    osTitle: "BEIBARYS_OS v98.26 // CREATIVE DESKTOP",
+    startBtn: "Start",
+    backHome: "← Exit to Portfolio",
+    winBio: "C:\\BEIBARYS\\ABOUT_ME.EXE",
+    winStats: "TASK_MANAGER // STATS.SYS",
+    winGallery: "PHOTO_VIEWER.EXE — Interactive Polaroid Stack",
+    winLego: "LEGO_BUILDER_98.EXE — Click grid to place bricks",
+    winSkills: "SERVICES_AND_STACK.DLL",
+    winProcess: "WORKFLOW_PIPELINE.BAT",
+    winMessenger: "MESSENGER_DIRECT.EXE",
+    roleBadge: "LVL 99 · WEB DESIGNER & FRONTEND DEVELOPER",
+    sloganTitle: "Building LEGO since childhood —",
+    sloganSub: "today I assemble high-converting websites the exact same way: brick by brick, pixel by pixel, until every detail clicks.",
+    legoHint: "Click any cell to snap a LEGO brick!",
+    legoClear: "Clear board",
+    galleryHint: "Click or tap cards to shuffle the Polaroid stack · Choose view mode:",
+    photos: [
+      { title: "BEIBARYS_PORTRAIT.PNG", tag: "FOUNDER / ALMATY", caption: "Beibarys — Web Designer & Frontend Developer" },
+      { title: "LEGO_ARCHITECT.BMP", tag: "SINCE CHILDHOOD", caption: "Every great interface starts with modular building blocks" },
+      { title: "GOLDEN_HOUR_HILL.JPG", tag: "AESTHETICS", caption: "Atmospheric visuals, 3D motion & memorable art direction" },
+      { title: "ORIGINAL_SHOT.JPG", tag: "ARCHIVE_2026", caption: "Behind the scenes — crafting websites that launch in days" },
+    ],
+    writeWa: "WhatsApp (8 775 938 60 67)",
+    writeTg: "Telegram (8 775 938 60 67)",
+  },
+  ru: {
+    osTitle: "BEIBARYS_OS v98.26 // КРЕАТИВНЫЙ РАБОЧИЙ СТОЛ",
+    startBtn: "Пуск",
+    backHome: "← На главную",
+    winBio: "C:\\BEIBARYS\\ОБО_МНЕ.EXE",
+    winStats: "ДИСПЕТЧЕР_ОПЫТА // STATS.SYS",
+    winGallery: "ФОТО_ГАЛЕРЕЯ.EXE — Интерактивная колода кадров",
+    winLego: "LEGO_КОНСТРУКТОР_98.EXE — Нажимай на клетки и строй из кубиков",
+    winSkills: "ЧЕМ_ЗАНИМАЮСЬ.DLL",
+    winProcess: " ПРОЦЕСС_РАБОТЫ.BAT",
+    winMessenger: "ПРЯМАЯ_СВЯЗЬ.EXE",
+    roleBadge: "LVL 99 · ВЕБ-ДИЗАЙНЕР И РАЗРАБОТЧИК",
+    sloganTitle: "С детства собираю LEGO —",
+    sloganSub: "а сегодня точно так же собираю сильные сайты и цифровые каталоги: деталь за деталью, пиксель к пикселю, пока всё не встанет идеально.",
+    legoHint: "Нажимай на поле, чтобы ставить цветные кубики LEGO!",
+    legoClear: "Очистить поле",
+    galleryHint: "Нажимай на карточки, чтобы листать стопку Polaroid · Или переключи режим:",
+    photos: [
+      { title: "BEIBARYS_PORTRAIT.PNG", tag: "АЛМАТЫ / KZ", caption: "Бейбарыс — веб-дизайнер и фронтенд-разработчик" },
+      { title: "LEGO_AVATAR.PNG", tag: "С ДЕТСТВА С LEGO", caption: "Любой сложный проект складывается из продуманных деталей" },
+      { title: "STUDIO_HILL.JPG", tag: "АТМОСФЕРА", caption: "Дизайнерский визуал, 3D и плавные микроанимации" },
+      { title: "ORIGINAL_ARCHIVE.JPG", tag: "АРХИВ_2026", caption: "Запуск сайтов и каталогов за дни, а не месяцы" },
+    ],
+    writeWa: "Написать в WhatsApp (8 775 938 60 67)",
+    writeTg: "Написать в Telegram (8 775 938 60 67)",
+  },
+  kk: {
+    osTitle: "BEIBARYS_OS v98.26 // КРЕАТИВТІ ЖҰМЫС ҮСТЕЛІ",
+    startBtn: "Бастау",
+    backHome: "← Басты бетке",
+    winBio: "C:\\BEIBARYS\\МЕН_ТУРАЛЫ.EXE",
+    winStats: "ТӘЖІРИБЕ_ДИСПЕТЧЕРІ // STATS.SYS",
+    winGallery: "ФОТО_ГАЛЕРЕЯ.EXE — Интерактивті Polaroid карталары",
+    winLego: "LEGO_КОНСТРУКТОР_98.EXE — Торды басып, LEGO текшелерін қойыңыз",
+    winSkills: "НЕМЕН_АЙНАЛЫСАМЫН.DLL",
+    winProcess: "ЖҰМЫС_ПРОЦЕСІ.BAT",
+    winMessenger: "ТІКЕЛЕЙ_БАЙЛАНЫС.EXE",
+    roleBadge: "LVL 99 · ВЕБ-ДИЗАЙНЕР ЖӘНЕ ӘЗІРЛЕУШІ",
+    sloganTitle: "Бала кезімнен LEGO жинаймын —",
+    sloganSub: "бүгінде сайттар мен цифрлық каталогтарды да дәл солай құрастырамын: бөлшектен бөлшекке, пиксельден пиксельге, әр деталь өз орнына түскенше.",
+    legoHint: "Түрлі-түсті LEGO текшелерін қою үшін торды басыңыз!",
+    legoClear: "Тазалау",
+    galleryHint: "Polaroid карталарын ауыстыру үшін басыңыз:",
+    photos: [
+      { title: "BEIBARYS_PORTRAIT.PNG", tag: "АЛМАТЫ / KZ", caption: "Бейбарыс — веб-дизайнер және фронтенд-әзірлеуші" },
+      { title: "LEGO_AVATAR.PNG", tag: "БАЛА КЕЗДЕН LEGO", caption: "Кез келген мықты интерфейс ұқыпты бөлшектерден тұрады" },
+      { title: "STUDIO_HILL.JPG", tag: "АТМОСФЕРА", caption: "Дизайнерлік визуал, 3D және тегіс анимациялар" },
+      { title: "ORIGINAL_ARCHIVE.JPG", tag: "МҰРАҒАТ_2026", caption: "Сайттар мен каталогтарды санаулы күнде іске қосу" },
+    ],
+    writeWa: "WhatsApp-қа жазу (8 775 938 60 67)",
+    writeTg: "Telegram-ға жазу (8 775 938 60 67)",
+  },
+};
+
+// Шапка окна Windows 98
+function WinBar({ title, accent = "from-[#000080] to-[#1084d0]" }: { title: string; accent?: string }) {
   return (
-    <div className={`overflow-hidden ${className}`}>
-      <motion.div initial={{ y: "110%" }} animate={{ y: 0 }} transition={{ duration: 1, delay, ease: [0.2, 0.7, 0.2, 1] }}>
-        {Array.from(text).map((ch, i) => (
-          <motion.span
-            key={i}
-            className="inline-block whitespace-pre cursor-default"
-            whileHover={{ y: -14, rotate: i % 2 ? 6 : -6, color: "#4B5BFF", scale: 1.08 }}
-            transition={{ type: "spring", stiffness: 400, damping: 14 }}
-          >
-            {ch}
-          </motion.span>
-        ))}
-      </motion.div>
-    </div>
-  );
-}
-
-// Фото: 3D-наклон за курсором + прожектор
-function PhotoStage({ hint }: { hint: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const mx = useMotionValue(0), my = useMotionValue(0);
-  const sx = useSpring(mx, { stiffness: 120, damping: 14 }), sy = useSpring(my, { stiffness: 120, damping: 14 });
-  const rotY = useTransform(sx, [-0.5, 0.5], [-16, 16]);
-  const rotX = useTransform(sy, [-0.5, 0.5], [14, -14]);
-  const gx = useTransform(sx, [-0.5, 0.5], ["20%", "80%"]);
-  const gy = useTransform(sy, [-0.5, 0.5], ["20%", "80%"]);
-  const glow = useTransform([gx, gy], ([x, y]) => `radial-gradient(circle at ${x} ${y}, rgba(255,255,255,0.75), rgba(75,91,255,0.25) 35%, transparent 65%)`);
-  const move = (e: React.PointerEvent) => {
-    const r = ref.current!.getBoundingClientRect();
-    mx.set((e.clientX - r.left) / r.width - 0.5);
-    my.set((e.clientY - r.top) / r.height - 0.5);
-  };
-  const leave = () => { mx.set(0); my.set(0); };
-  return (
-    <div className="relative mx-auto w-full max-w-[460px] [perspective:1100px]" onPointerMove={move} onPointerLeave={leave} ref={ref}>
-      <motion.div style={{ rotateX: rotX, rotateY: rotY, transformStyle: "preserve-3d" }} className="relative aspect-[4/5]">
-        {/* фон-арка */}
-        <motion.div style={{ background: glow, translateZ: 0 }} className="absolute inset-0 rounded-t-[999px] rounded-b-[40px] bg-ink/90 overflow-hidden">
-          <div className="absolute inset-0 opacity-30 mix-blend-overlay" style={{ backgroundImage: "repeating-linear-gradient(135deg, rgba(255,255,255,.35) 0 1px, transparent 1px 14px)" }} />
-        </motion.div>
-        {/* вращающаяся круглая надпись */}
-        <div style={{ transform: "translateZ(40px)" }} className="absolute -left-3 top-4 md:-left-14 md:top-8 w-20 h-20 md:w-28 md:h-28 rounded-full bg-accent text-white flex items-center justify-center pointer-events-none">
-          <svg viewBox="0 0 100 100" className="spin-slow absolute inset-0 w-full h-full">
-            <defs><path id="c" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" /></defs>
-            <text fontSize="10.5" fill="white" letterSpacing="2.5"><textPath href="#c">DESIGN • CODE • MOTION • </textPath></text>
-          </svg>
-          <span className="text-lg md:text-2xl">✦</span>
-        </div>
-        {/* фото */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/me.png" alt="Beibarys" draggable={false}
-          style={{ transform: "translateZ(90px)" }}
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[98%] md:h-[104%] w-auto max-w-none select-none drop-shadow-[0_30px_40px_rgba(0,0,0,.45)]" />
-        {/* стикеры */}
-        <motion.div style={{ transform: "translateZ(130px)" }} animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity }}
-          className="absolute right-0 md:right-[-4%] top-[18%] rounded-full bg-paper text-ink px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm shadow-xl pointer-events-none">🎸 Guitar</motion.div>
-        <motion.div style={{ transform: "translateZ(110px)" }} animate={{ y: [0, 10, 0] }} transition={{ duration: 5, repeat: Infinity }}
-          className="absolute left-0 md:left-[-6%] bottom-[22%] rounded-full bg-paper text-ink px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm shadow-xl pointer-events-none">🧱 LEGO</motion.div>
-      </motion.div>
-      <div className="mt-6 text-center text-xs uppercase tracking-widest opacity-60">{hint}</div>
-    </div>
-  );
-}
-
-function Counter({ n, suffix }: { n: number; suffix: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.6 });
-  const [v, setV] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    const c = animate(0, n, { duration: 2, ease: "easeOut", onUpdate: (x) => setV(Math.round(x)) });
-    return () => c.stop();
-  }, [inView, n]);
-  return <span ref={ref}>{v}{suffix}</span>;
-}
-
-// Карточка с прожектором, следящим за курсором
-function SpotCard({ index, title, text }: { index: number; title: string; text: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [pos, setPos] = useState({ x: 0, y: 0, on: false });
-  return (
-    <div ref={ref}
-      onPointerMove={(e) => { const r = ref.current!.getBoundingClientRect(); setPos({ x: e.clientX - r.left, y: e.clientY - r.top, on: true }); }}
-      onPointerLeave={() => setPos((p) => ({ ...p, on: false }))}
-      className="group relative overflow-hidden rounded-3xl border border-ink/15 bg-paper p-8 md:p-10 min-h-[280px] flex flex-col justify-between transition-transform duration-500 hover:-translate-y-2">
-      <div className="pointer-events-none absolute inset-0 transition-opacity duration-300"
-        style={{ opacity: pos.on ? 1 : 0, background: `radial-gradient(380px circle at ${pos.x}px ${pos.y}px, rgba(75,91,255,.9), rgba(75,91,255,0) 70%)` }} />
-      <div className="relative z-10 text-sm opacity-60 group-hover:text-white group-hover:opacity-90 transition-colors">0{index + 1}</div>
-      <div className="relative z-10 group-hover:text-white transition-colors duration-300">
-        <h3 className="text-3xl md:text-4xl tracking-tight mb-4">{title}</h3>
-        <p className="opacity-70 group-hover:opacity-95 leading-relaxed">{text}</p>
+    <div className={`flex items-center justify-between bg-gradient-to-r ${accent} px-2.5 py-1.5 text-white select-none`}>
+      <div className="flex items-center gap-2 truncate font-mono text-xs font-bold tracking-wide">
+        <span className="inline-block h-3 w-3 bg-[#FFF3A8] border border-black" />
+        <span className="truncate">{title}</span>
+      </div>
+      <div className="flex items-center gap-1 shrink-0">
+        <span className="flex h-4 w-4 items-center justify-center bg-[#C0C0C0] text-[10px] font-bold text-black border border-t-white border-l-white border-r-black border-b-black">
+          _
+        </span>
+        <span className="flex h-4 w-4 items-center justify-center bg-[#C0C0C0] text-[10px] font-bold text-black border border-t-white border-l-white border-r-black border-b-black">
+          □
+        </span>
+        <span className="flex h-4 w-4 items-center justify-center bg-[#C0C0C0] text-[10px] font-bold text-black border border-t-white border-l-white border-r-black border-b-black">
+          ×
+        </span>
       </div>
     </div>
   );
 }
 
-function Process({ title, steps }: { title: string; steps: { title: string; text: string }[] }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 80%", "end 60%"] });
-  const w = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+// Интерактивный мини-конструктор LEGO прямо внутри окна About
+const LEGO_COLORS = ["#E83828", "#4B5BFF", "#F5C518", "#1FAF5A", "#FF8A2B"];
+
+function LegoMiniBuilder({ hint, clearLabel }: { hint: string; clearLabel: string }) {
+  // 8x5 сетка с предзаполненным пиксельным сердечком/кубиками LEGO
+  const initial = [
+    0, 1, 1, 0, 0, 2, 2, 0,
+    1, 1, 1, 1, 2, 2, 2, 2,
+    0, 3, 3, 3, 3, 3, 3, 0,
+    0, 0, 4, 4, 4, 4, 0, 0,
+    0, 0, 0, 1, 1, 0, 0, 0,
+  ];
+  const [grid, setGrid] = useState<number[]>(initial);
+  const [colorIdx, setColorIdx] = useState(0);
+
+  const toggleCell = (idx: number) => {
+    playClick();
+    setGrid((g) => {
+      const next = [...g];
+      next[idx] = next[idx] === colorIdx + 1 ? 0 : colorIdx + 1;
+      return next;
+    });
+  };
+
   return (
-    <section className="bg-ink text-paper px-6 md:px-[8%] py-28 md:py-40">
-      <Reveal><h2 className="text-5xl md:text-8xl tracking-tighter leading-none mb-20">{title}</h2></Reveal>
-      <div ref={ref} className="relative">
-        <div className="absolute left-0 right-0 top-[7px] h-px bg-paper/20 hidden md:block" />
-        <motion.div style={{ width: w }} className="absolute left-0 top-[7px] h-px bg-accent hidden md:block" />
-        <div className="grid md:grid-cols-4 gap-12 md:gap-8">
-          {steps.map((s, i) => (
-            <Reveal key={i} delay={i * 120}>
-              <div className="relative">
-                <div className="w-4 h-4 rounded-full bg-accent mb-8 ring-8 ring-ink" />
-                <div className="text-sm opacity-50 mb-2">0{i + 1}</div>
-                <h3 className="text-3xl tracking-tight mb-3">{s.title}</h3>
-                <p className="opacity-70 leading-relaxed max-w-[260px]">{s.text}</p>
+    <div className="p-3 sm:p-4 space-y-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+        <span>🧱 {hint}</span>
+        <button
+          type="button"
+          onClick={() => {
+            setGrid(Array(40).fill(0));
+            playClick();
+          }}
+          className={winBtn}
+        >
+          {clearLabel}
+        </button>
+      </div>
+
+      {/* Выбор цвета кубика */}
+      <div className="flex items-center gap-2">
+        {LEGO_COLORS.map((hex, i) => (
+          <button
+            key={hex}
+            type="button"
+            onClick={() => {
+              setColorIdx(i);
+              playClick();
+            }}
+            className={`h-7 w-10 rounded-sm border-2 transition-transform flex items-center justify-center ${
+              colorIdx === i ? "scale-110 border-black shadow" : "border-black/30 opacity-75"
+            }`}
+            style={{ backgroundColor: hex }}
+          >
+            <span className="h-2.5 w-2.5 rounded-full bg-white/40 border border-black/30" />
+          </button>
+        ))}
+      </div>
+
+      {/* Поле 8x5 с пинами LEGO */}
+      <div className={`${winInset} bg-[#1c222e] p-2.5 grid grid-cols-8 gap-1.5`}>
+        {grid.map((val, idx) => {
+          const bg = val > 0 ? LEGO_COLORS[(val - 1) % LEGO_COLORS.length] : "rgba(255,255,255,0.06)";
+          return (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => toggleCell(idx)}
+              className="aspect-square rounded-[3px] border border-black/40 flex items-center justify-center transition-transform active:scale-90"
+              style={{
+                backgroundColor: bg,
+                boxShadow: val > 0 ? "inset 0 2px 0 rgba(255,255,255,0.45), 0 2px 0 rgba(0,0,0,0.45)" : undefined,
+              }}
+            >
+              {/* Круглый пупырышек LEGO (stud) */}
+              <span
+                className="h-2/5 w-2/5 rounded-full border border-black/35"
+                style={{
+                  backgroundColor: val > 0 ? bg : "rgba(255,255,255,0.08)",
+                  boxShadow: val > 0 ? "inset 0 1px 0 rgba(255,255,255,0.5)" : undefined,
+                }}
+              />
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// Необычная интерактивная фотогалерея (режим 3D-стопки Polaroid + режим сетки альбома)
+const GALLERY_IMAGES = ["/me.png", "/lego.png", "/hill-bg.jpg", "/lego-raw.jpg"];
+
+function RetroPhotoGallery({
+  items,
+  hint,
+}: {
+  items: { title: string; tag: string; caption: string }[];
+  hint: string;
+}) {
+  const [active, setActive] = useState(0);
+  const [view, setView] = useState<"deck" | "grid">("deck");
+
+  const nextCard = () => {
+    playClick();
+    setActive((a) => (a + 1) % items.length);
+  };
+
+  return (
+    <div className="p-4 sm:p-6 space-y-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="font-mono text-xs text-[#222]">{hint}</p>
+        <div className="flex gap-1.5">
+          <button
+            type="button"
+            onClick={() => {
+              setView("deck");
+              playClick();
+            }}
+            className={`${winBtn} ${view === "deck" ? "!bg-[#000080] !text-white" : ""}`}
+          >
+            🃏 3D Stack
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setView("grid");
+              playClick();
+            }}
+            className={`${winBtn} ${view === "grid" ? "!bg-[#000080] !text-white" : ""}`}
+          >
+            ⊞ Film Grid
+          </button>
+        </div>
+      </div>
+
+      {view === "deck" ? (
+        <div className="grid md:grid-cols-[1.1fr_0.9fr] gap-6 items-center py-4">
+          {/* Интерактивная веерная стопка Polaroid-карточек */}
+          <div
+            onClick={nextCard}
+            className="relative mx-auto h-[340px] sm:h-[380px] w-full max-w-[340px] cursor-pointer select-none"
+          >
+            {items.map((it, idx) => {
+              const offset = (idx - active + items.length) % items.length;
+              const isTop = offset === 0;
+              return (
+                <motion.div
+                  key={it.title}
+                  animate={{
+                    rotate: isTop ? -2 : offset === 1 ? 6 : offset === 2 ? -8 : 11,
+                    x: isTop ? 0 : offset === 1 ? 18 : offset === 2 ? -16 : 8,
+                    y: isTop ? 0 : offset * 10,
+                    scale: isTop ? 1 : 1 - offset * 0.05,
+                    zIndex: items.length - offset,
+                  }}
+                  transition={{ type: "spring", stiffness: 260, damping: 22 }}
+                  className="absolute inset-0 rounded-sm bg-[#FAF8F2] p-3 pb-12 shadow-[0_20px_45px_rgba(0,0,0,0.45)] border border-black/30 flex flex-col justify-between"
+                >
+                  <div className="relative h-full w-full overflow-hidden bg-[#181920] border border-black/20 flex items-center justify-center">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={GALLERY_IMAGES[idx % GALLERY_IMAGES.length]}
+                      alt={it.title}
+                      draggable={false}
+                      className="h-full w-full object-contain"
+                    />
+                    <span className="absolute left-2 top-2 bg-[#000080] text-white font-mono text-[10px] px-2 py-0.5">
+                      {it.tag}
+                    </span>
+                  </div>
+                  <div className="pt-2.5 flex items-center justify-between font-mono text-xs text-black">
+                    <span className="font-bold truncate">{it.title}</span>
+                    <span className="text-[10px] opacity-60">0{idx + 1}/04 ↻</span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Описание выбранного кадра + переключатели */}
+          <div className={`${winInset} p-4 space-y-4`}>
+            <div className="font-mono text-xs text-[#000080] font-bold">
+              FILE_0{active + 1}: {items[active].title}
+            </div>
+            <p className="text-base sm:text-lg font-medium leading-snug text-[#111]">
+              {items[active].caption}
+            </p>
+            <div className="flex flex-wrap gap-2 pt-2">
+              {items.map((it, idx) => (
+                <button
+                  key={it.title}
+                  type="button"
+                  onClick={() => {
+                    setActive(idx);
+                    playClick();
+                  }}
+                  className={`${winBtn} ${active === idx ? "!bg-[#4B5BFF] !text-white" : ""}`}
+                >
+                  0{idx + 1}
+                </button>
+              ))}
+              <button type="button" onClick={nextCard} className={winBtn}>
+                Next Photo ▶
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* Режим раскадровки / плёнки */
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {items.map((it, idx) => (
+            <div key={it.title} className="bg-[#FAF8F2] p-2.5 border-2 border-black shadow-md">
+              <div className="relative aspect-[4/4] w-full overflow-hidden bg-[#181920] flex items-center justify-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={GALLERY_IMAGES[idx % GALLERY_IMAGES.length]}
+                  alt={it.title}
+                  className="h-full w-full object-contain"
+                />
+                <span className="absolute left-2 top-2 bg-black/75 text-white font-mono text-[9px] px-1.5 py-0.5">
+                  {it.tag}
+                </span>
               </div>
-            </Reveal>
+              <div className="mt-2 font-mono text-[11px] font-bold text-black">{it.title}</div>
+              <div className="mt-0.5 text-xs text-black/75 leading-snug">{it.caption}</div>
+            </div>
           ))}
         </div>
-      </div>
-    </section>
+      )}
+    </div>
   );
 }
 
 export default function AboutPage() {
   const { lang } = useT();
   const a = aboutDict[lang];
-  const [isTouch, setIsTouch] = useState(false);
+  const os = osCopy[lang];
+  const [clock, setClock] = useState("19:30");
 
   useEffect(() => {
-    setIsTouch(window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window);
+    const u = () => {
+      const d = new Date();
+      setClock(`${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`);
+    };
+    u();
+    const id = setInterval(u, 15000);
+    return () => clearInterval(id);
   }, []);
+
   return (
-    <>
-      {/* HERO */}
-      <section className="relative min-h-screen bg-sage text-white overflow-hidden px-6 md:px-[8%] pt-32 pb-20 flex items-center">
-        <InteractiveBg />
-        <div className="relative z-10 grid w-full md:grid-cols-[1.25fr_1fr] gap-16 items-center">
-          <div>
-            <Link href="/" className="inline-flex items-center gap-2 text-sm uppercase tracking-widest opacity-70 hover:opacity-100 mb-10">← {a.back}</Link>
-            <div className="text-sm uppercase tracking-widest opacity-70 mb-6">{a.kicker}</div>
-            <h1 className="text-[11vw] md:text-[5.6vw] leading-[1] tracking-[-0.04em] font-medium">
-              {a.heroLines.map((l, i) => <HoverLine key={l} text={l} delay={0.15 * i} />)}
-            </h1>
-            <Reveal delay={400}><p className="mt-10 max-w-xl text-lg md:text-xl leading-relaxed text-white/85">{a.lead}</p></Reveal>
-            <Reveal delay={600}>
-              <div className="mt-8 flex flex-wrap gap-3">
-                {a.tags.map((t) => <span key={t} className="rounded-full border border-white/40 px-4 py-2 text-sm backdrop-blur">{t}</span>)}
+    <div
+      className="relative min-h-screen bg-[#008080] text-[#0b0b0e] pt-24 pb-20 px-3 sm:px-6 md:px-[6%] overflow-hidden"
+      style={{
+        backgroundImage:
+          "radial-gradient(rgba(255,255,255,0.14) 1px, transparent 1px), linear-gradient(180deg, #007878 0%, #005858 100%)",
+        backgroundSize: "24px 24px, 100% 100%",
+      }}
+    >
+      {/* Верхняя панель быстрого возврата и статуса системы */}
+      <div className="mx-auto max-w-6xl mb-6 flex flex-wrap items-center justify-between gap-3">
+        <Link href="/" className={`${winBtn} inline-flex items-center gap-2 text-xs sm:text-sm`}>
+          {os.backHome}
+        </Link>
+        <div className="font-mono text-xs text-white/90 bg-black/35 px-3 py-1 border border-white/25">
+          🖥️ {os.osTitle}
+        </div>
+      </div>
+
+      {/* СЕТКА ОКОН РАБОЧЕГО СТОЛА BEIBARYS_OS */}
+      <div className="mx-auto max-w-6xl space-y-6">
+        {/* РЯД 1: ГЛАВНОЕ ОКНО ОБО МНЕ + МИНИ-КОНСТРУКТОР LEGO */}
+        <div className="grid lg:grid-cols-[1.25fr_0.85fr] gap-6 items-start">
+          {/* Окно 1: Профиль игрока / дизайнера */}
+          <div className={winBox}>
+            <WinBar title={os.winBio} />
+            <div className="p-4 sm:p-6 space-y-5">
+              <div className="grid sm:grid-cols-[150px_1fr] gap-5 items-center">
+                {/* Пиксельная/ретро рамка с аватаром */}
+                <div className={`${winInset} relative aspect-square bg-[#181c26] overflow-hidden flex items-end justify-center`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/me.png" alt="Beibarys" className="h-[96%] w-auto object-contain" />
+                  <span className="absolute bottom-1 right-1 bg-[#1FAF5A] text-white font-mono text-[9px] px-1.5 py-0.5">
+                    ONLINE
+                  </span>
+                </div>
+
+                <div className="space-y-2.5">
+                  <div className="inline-block bg-[#000080] text-white font-mono text-[10px] sm:text-xs px-2.5 py-1 font-bold">
+                    {os.roleBadge}
+                  </div>
+                  <h1 className="text-2xl sm:text-4xl font-bold tracking-tight leading-tight">
+                    {a.heroLines.join(" ")}
+                  </h1>
+                  <div className="flex flex-wrap gap-1.5">
+                    {a.tags.map((t) => (
+                      <span key={t} className="bg-white border border-black/40 px-2 py-0.5 font-mono text-xs">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </Reveal>
-          </div>
-          <PhotoStage hint={isTouch ? a.hintTouch : a.hint} />
-        </div>
-      </section>
 
-      {/* MARQUEE */}
-      <section className="bg-paper py-10 overflow-hidden border-b border-ink/10">
-        <ScrollVelocityContainer className="text-5xl md:text-8xl tracking-tighter font-medium">
-          <ScrollVelocityRow baseVelocity={4} direction={-1}>{tools.map((t) => `${t}  ✦  `).join("")}</ScrollVelocityRow>
-        </ScrollVelocityContainer>
-      </section>
+              {/* Основной текст */}
+              <div className={`${winInset} p-4 text-sm sm:text-base leading-relaxed`}>
+                {a.lead}
+              </div>
 
-      {/* STATS */}
-      <section className="bg-paper px-6 md:px-[8%] py-28 md:py-36">
-        <Reveal><div className="text-[11px] uppercase text-ink/60 mb-10">{a.statsTitle}</div></Reveal>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-y-14 gap-x-6">
-          {a.stats.map((s, i) => (
-            <Reveal key={i} delay={i * 100}>
-              <div className="text-6xl md:text-8xl tracking-tighter leading-none"><Counter n={s.n} suffix={s.suffix} /></div>
-              <div className="mt-4 text-sm md:text-base opacity-70 max-w-[200px]">{s.label}</div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* WHAT I DO */}
-      <section className="bg-paper px-6 md:px-[8%] pb-28 md:pb-40">
-        <Reveal><h2 className="text-5xl md:text-8xl tracking-tighter leading-none mb-16">{a.doTitle}</h2></Reveal>
-        <div className="grid md:grid-cols-2 gap-5">
-          {a.doItems.map((d, i) => <Reveal key={i} delay={i * 100}><SpotCard index={i} title={d.title} text={d.text} /></Reveal>)}
-        </div>
-      </section>
-
-      <Process title={a.processTitle} steps={a.process} />
-
-      {/* FUN + CTA */}
-      <section className="relative bg-sage text-white overflow-hidden px-6 md:px-[8%] py-28 md:py-44">
-        <InteractiveBg />
-        <div className="relative z-10">
-          <Reveal><div className="text-sm uppercase tracking-widest opacity-70 mb-6">{a.funTitle}</div></Reveal>
-          <Reveal delay={100}><p className="text-3xl md:text-6xl tracking-tight leading-[1.1] max-w-4xl">{a.funText}</p></Reveal>
-          <Reveal delay={200}>
-            <div className="mt-20 flex flex-wrap items-center gap-10">
-              <h2 className="text-5xl md:text-8xl tracking-tighter leading-none">{a.ctaTitle}</h2>
-              <Magnetic href={`mailto:${site.email}`} className="w-36 h-36 !bg-accent hover:!bg-paper hover:!text-ink">{a.ctaBtn}</Magnetic>
+              {/* Фирменный слоган про LEGO с детства */}
+              <div className="bg-[#FFF3A8] border-2 border-black p-4 shadow-[3px_3px_0_#000]">
+                <div className="font-mono text-xs font-bold uppercase text-[#1c34b9] mb-1">
+                  🧱 LEGO PHILOSOPHY // SLOGAN.TXT
+                </div>
+                <div className="text-base sm:text-lg font-bold text-[#111]">{os.sloganTitle}</div>
+                <p className="mt-1 text-xs sm:text-sm text-[#222] leading-relaxed">{os.sloganSub}</p>
+              </div>
             </div>
-          </Reveal>
+          </div>
+
+          {/* Окно 2: Интерактивный LEGO-конструктор + Статистика (3+ года опыта) */}
+          <div className="space-y-6">
+            <div className={winBox}>
+              <WinBar title={os.winStats} accent="from-[#2E9E5B] to-[#12A4A0]" />
+              <div className="p-4 grid grid-cols-2 gap-3">
+                {a.stats.map((s, i) => (
+                  <div key={i} className={`${winInset} p-3`}>
+                    <div className="font-mono text-3xl sm:text-4xl font-bold text-[#000080]">
+                      {s.n}
+                      {s.suffix}
+                    </div>
+                    <div className="mt-1 font-mono text-[11px] text-[#333] uppercase">{s.label}</div>
+                    {/* Ретро прогресс-бар */}
+                    <div className="mt-2 h-2 w-full bg-[#ddd] border border-black/40 overflow-hidden flex gap-0.5 p-0.5">
+                      {Array.from({ length: 8 }).map((_, b) => (
+                        <span key={b} className="flex-1 bg-[#000080]" />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className={winBox}>
+              <WinBar title={os.winLego} accent="from-[#E83828] to-[#FF8A2B]" />
+              <LegoMiniBuilder hint={os.legoHint} clearLabel={os.legoClear} />
+            </div>
+          </div>
         </div>
-      </section>
-    </>
+
+        {/* РЯД 2: ИНТЕРАКТИВНАЯ ФОТОГАЛЕРЕЯ (3D POLAROID STACK + FILM GRID) */}
+        <div className={winBox}>
+          <WinBar title={os.winGallery} accent="from-[#4B5BFF] to-[#8A5CF5]" />
+          <RetroPhotoGallery items={os.photos} hint={os.galleryHint} />
+        </div>
+
+        {/* РЯД 3: ЧЕМ ЗАНИМАЮСЬ + СТЕК */}
+        <div className={winBox}>
+          <WinBar title={os.winSkills} />
+          <div className="p-4 sm:p-6 space-y-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+              {a.doItems.map((d, i) => (
+                <div key={i} className={`${winInset} p-4 flex flex-col justify-between`}>
+                  <div className="font-mono text-xs font-bold text-[#4B5BFF] mb-2">MODULE_0{i + 1}.EXE</div>
+                  <div>
+                    <h3 className="text-lg font-bold mb-1.5">{d.title}</h3>
+                    <p className="text-xs sm:text-sm text-[#333] leading-relaxed">{d.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Панель инструментов */}
+            <div className="border-t border-black/25 pt-4 flex flex-wrap items-center gap-2">
+              <span className="font-mono text-xs font-bold uppercase mr-2">{a.toolsTitle}:</span>
+              {tools.map((t) => (
+                <span key={t} className={winBtn}>
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* РЯД 4: КАК МЫ РАБОТАЕМ + БЫСТРАЯ СВЯЗЬ В WHATSAPP / TELEGRAM */}
+        <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-6">
+          <div className={winBox}>
+            <WinBar title={os.winProcess} />
+            <div className="p-4 sm:p-6 grid sm:grid-cols-4 gap-3">
+              {a.process.map((s, i) => (
+                <div key={i} className={`${winInset} p-3.5`}>
+                  <div className="font-mono text-xs font-bold bg-[#000080] text-white inline-block px-2 py-0.5 mb-2">
+                    STEP 0{i + 1}
+                  </div>
+                  <div className="font-bold text-base mb-1">{s.title}</div>
+                  <div className="text-xs text-[#333] leading-relaxed">{s.text}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={winBox}>
+            <WinBar title={os.winMessenger} accent="from-[#1FAF5A] to-[#000080]" />
+            <div className="p-4 sm:p-5 space-y-3">
+              <div className="font-bold text-lg">{a.ctaTitle}</div>
+              <a
+                href={site.whatsapp}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center justify-between bg-[#1FAF5A] text-white font-mono text-xs sm:text-sm font-bold px-4 py-3 border-2 border-black shadow-[3px_3px_0_#000] hover:translate-y-[-1px] transition-transform"
+              >
+                <span>💬 {os.writeWa}</span>
+                <span>↗</span>
+              </a>
+              <a
+                href={site.telegram}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center justify-between bg-[#229ED9] text-white font-mono text-xs sm:text-sm font-bold px-4 py-3 border-2 border-black shadow-[3px_3px_0_#000] hover:translate-y-[-1px] transition-transform"
+              >
+                <span>✈️ {os.writeTg}</span>
+                <span>↗</span>
+              </a>
+              <div className="pt-1 font-mono text-xs text-[#222]">
+                📧 {site.email}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Нижняя фиксированная панель задач в стиле Windows 98 */}
+      <div className="fixed bottom-0 inset-x-0 z-40 h-10 bg-[#C0C0C0] border-t-2 border-white px-2 flex items-center justify-between font-mono text-xs text-black select-none">
+        <div className="flex items-center gap-2">
+          <Link href="/" className={`${winBtn} flex items-center gap-1.5 !py-0.5`}>
+            <span className="inline-block h-3 w-3 bg-[#4B5BFF]" />
+            <span>{os.startBtn}</span>
+          </Link>
+          <span className="hidden sm:inline-block bg-white/70 border border-black/40 px-2.5 py-0.5 truncate">
+            🧱 {os.winBio}
+          </span>
+          <span className="hidden md:inline-block bg-white/70 border border-black/40 px-2.5 py-0.5 truncate">
+            📸 {os.winGallery}
+          </span>
+        </div>
+        <div className={`${winInset} px-2.5 py-0.5 text-[11px] font-bold`}>
+          🔊 {clock}
+        </div>
+      </div>
+    </div>
   );
 }
-

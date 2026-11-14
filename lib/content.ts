@@ -1,21 +1,117 @@
 // ====== РЕДАКТИРУЙ ЗДЕСЬ: твои данные ======
 export const site = {
   name: "Beibarys",
-  email: "hello@example.com",
+  phone: "+7 775 938 60 67",
+  phoneRaw: "77759386067",
+  whatsapp: "https://wa.me/77759386067",
+  telegram: "https://t.me/+77759386067",
+  instagram: "#",
+  email: "abdollab1220@gmail.com",
   socials: [
+    { label: "WhatsApp", href: "https://wa.me/77759386067" },
+    { label: "Telegram", href: "https://t.me/+77759386067" },
     { label: "Instagram", href: "#" },
-    { label: "Telegram", href: "#" },
-    { label: "GitHub", href: "#" },
   ],
 };
 
 export type Lang = "en" | "ru" | "kk";
 export const langs: Lang[] = ["en", "ru", "kk"];
 
-// Проекты: image — путь к скриншоту в /public (пока градиент-заглушка)
-export const projects = [
-  { slug: "project-one", title: "Nomadique", color: "#4B5BFF", image: "", url: "https://nomadique-one.vercel.app" },
-  { slug: "project-five", title: "Green Clean", color: "#2E9E5B", image: "", url: "https://greencleankz.vercel.app" },
+export type Project = {
+  slug: string;
+  title: string;
+  color: string;
+  accent: string;
+  image: string;
+  url: string;
+  year: string;
+  stack: string[];
+  summary: Record<Lang, string>;
+  highlights: Record<Lang, string[]>;
+  screens: { label: Record<Lang, string>; caption: Record<Lang, string>; bg: string; badge: string }[];
+};
+
+export const projects: Project[] = [
+  {
+    slug: "project-one",
+    title: "Nomadique",
+    color: "#4B5BFF",
+    accent: "#FF9A62",
+    image: "",
+    url: "https://nomadique-one.vercel.app",
+    year: "2026",
+    stack: ["Next.js", "React", "Tailwind CSS", "Framer Motion", "Mobile-First Catalog"],
+    summary: {
+      en: "A refined editorial e-commerce catalog for an Almaty leather goods & bags atelier. Designed with fluid lookbook transitions, tactile product cards, and instant WhatsApp checkout.",
+      ru: "Премиальный цифровой каталог и онлайн-витрина для алматинского бренда сумок и аксессуаров Nomadique. Плавные lookbook-переходы, тактильные карточки товаров и мгновенный заказ в WhatsApp.",
+      kk: "Алматылық Nomadique сөмкелер мен аксессуарлар брендіне арналған премиум цифрлық каталог. Тегіс анимациялар, ыңғайлы тауар карточкалары және WhatsApp арқылы жылдам тапсырыс.",
+    },
+    highlights: {
+      en: ["Editorial lookbook slider with touch physics", "Instant category filtering & cart drawer", "Sub-second page load on mobile networks"],
+      ru: ["Журнальный lookbook-слайдер с тач-физикой", "Мгновенная фильтрация категорий и корзина", "Загрузка быстрее секунды на мобильном интернете"],
+      kk: ["Тач-физикасы бар lookbook-слайдер", "Санаттарды лезде сүзу және себет", "Мобильді интернетте 1 секундтан жылдам жүктелу"],
+    },
+    screens: [
+      {
+        label: { en: "01 · Hero Lookbook", ru: "01 · Главный Lookbook", kk: "01 · Басты Lookbook" },
+        caption: { en: "Full-bleed editorial slider with quick product preview card", ru: "Полноэкранный слайдер коллекции с быстрой карточкой товара", kk: "Тауар карточкасы бар толық экранды слайдер" },
+        bg: "linear-gradient(135deg, #2b2724 0%, #594a42 50%, #16151a 100%)",
+        badge: "COLLECTION 01 / 02",
+      },
+      {
+        label: { en: "02 · Interactive Catalog", ru: "02 · Интерактивный каталог", kk: "02 · Интерактивті каталог" },
+        caption: { en: "Category tabs (Bags / Accessories) with smooth color & angle switch", ru: "Переключение «Сумки / Аксессуары» с выбором оттенка и ракурса", kk: "«Сөмкелер / Аксессуарлар» санаттарын ауыстыру" },
+        bg: "linear-gradient(135deg, #1b1f38 0%, #4B5BFF 60%, #14151c 100%)",
+        badge: "CATALOG GRID",
+      },
+      {
+        label: { en: "03 · Quick Checkout", ru: "03 · Быстрый заказ", kk: "03 · Жылдам тапсырыс" },
+        caption: { en: "Slide-over bag with 1-click WhatsApp manager order", ru: "Выезжающая корзина с оформлением в WhatsApp в 1 клик", kk: "1 кликпен WhatsApp арқылы тапсырыс беру" },
+        bg: "linear-gradient(135deg, #3a231c 0%, #E8573D 60%, #16151a 100%)",
+        badge: "1-CLICK ORDER",
+      },
+    ],
+  },
+  {
+    slug: "project-five",
+    title: "Green Clean",
+    color: "#2E9E5B",
+    accent: "#6EE7B7",
+    image: "",
+    url: "https://greencleankz.vercel.app",
+    year: "2026",
+    stack: ["React", "Tailwind CSS", "Interactive Calculator", "Lead Generation"],
+    summary: {
+      en: "High-conversion service website for an eco-friendly cleaning company in Almaty. Features an interactive price calculator, before/after comparison, and direct messenger booking.",
+      ru: "Конверсионный сайт для сервиса эко-клининга в Алматы. Включает интерактивный калькулятор стоимости уборки по квадратуре, блок «До / После» и быструю бронь в мессенджеры.",
+      kk: "Алматыдағы эко-клининг қызметіне арналған конверсиялық сайт. Аумақ бойынша интерактивті баға калькуляторы, «Дейін / Кейін» блогы және мессенджер арқылы брондау.",
+    },
+    highlights: {
+      en: ["Interactive apartment area & tariff calculator", "Clear service breakdown checklists", "Direct WhatsApp lead capture with pre-filled parameters"],
+      ru: ["Интерактивный калькулятор площади и тарифа", "Наглядные чек-листы что входит в уборку", "Заявка в WhatsApp с уже заполненным расчётом"],
+      kk: ["Пәтер аумағы мен тарифінің интерактивті калькуляторы", "Тазалау тізімінің көрнекі чек-парақтары", "Дайын есеппен WhatsApp-қа өтінім жіберу"],
+    },
+    screens: [
+      {
+        label: { en: "01 · Hero & Instant Quote", ru: "01 · Первый экран и расчёт", kk: "01 · Басты экран және есеп" },
+        caption: { en: "Trust-focused hero with eco-badges and 60-second cost estimator", ru: "Экран с эко-гарантиями и расчётом стоимости за 60 секунд", kk: "Эко-кепілдіктер және 60 секундта бағаны есептеу" },
+        bg: "linear-gradient(135deg, #0d2e1e 0%, #2E9E5B 60%, #091912 100%)",
+        badge: "ECO CLEANING KZ",
+      },
+      {
+        label: { en: "02 · Interactive Calculator", ru: "02 · Калькулятор площади", kk: "02 · Аумақ калькуляторы" },
+        caption: { en: "Live m² slider + room counter with instant KZT price update", ru: "Ползунок м² и выбор типа уборки с мгновенным пересчётом цены в ₸", kk: "Шаршы метр слайдері және теңгемен лезде есептеу" },
+        bg: "linear-gradient(135deg, #12352c 0%, #12A4A0 60%, #0d1b1e 100%)",
+        badge: "LIVE CALCULATOR",
+      },
+      {
+        label: { en: "03 · Room Checklist", ru: "03 · Чек-лист комнат", kk: "03 · Бөлмелер чек-парағы" },
+        caption: { en: "Interactive tabs for Kitchen, Bathroom, Living room details", ru: "Интерактивные вкладки: Кухня, Ванная, Комнаты — что именно моют", kk: "Ас үй, Жуынатын бөлме, Бөлмелер — толық тізім" },
+        bg: "linear-gradient(135deg, #1f2e16 0%, #4ea832 60%, #11180d 100%)",
+        badge: "SERVICE DETAILS",
+      },
+    ],
+  },
 ];
 
 type Dict = {

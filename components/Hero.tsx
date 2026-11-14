@@ -115,7 +115,7 @@ export default function Hero() {
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "28%"]);
   const [mood, setMood] = useState(0);
-  const moods = [":)", "✦", "⚡", "🎸"];
+  const moods = [":)", "✦", "⚡", "🧱"];
 
   return (
     <section
