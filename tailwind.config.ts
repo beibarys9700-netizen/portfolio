@@ -4,6 +4,13 @@ const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        unbounded: ["Unbounded", "sans-serif"],
+        pixel: ["Pixelify Sans", "monospace", "sans-serif"],
+        jetbrains: ["JetBrains Mono", "monospace"],
+        caveat: ["Caveat", "cursive", "sans-serif"],
+        cormorant: ["Cormorant Garamond", "Georgia", "serif"],
+      },
       colors: {
         paper: "rgb(var(--paper) / <alpha-value>)",
         ink: "rgb(var(--ink) / <alpha-value>)",

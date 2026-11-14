@@ -9,11 +9,11 @@ import { playClick } from "@/lib/sound";
 
 // Классические 3D-рамки в стиле Windows 98 / Retro Creative OS
 const winBox =
-  "bg-[#C0C0C0] text-[#0b0b0e] border-2 border-t-[#FFFFFF] border-l-[#FFFFFF] border-r-[#2b2b2b] border-b-[#2b2b2b] shadow-[4px_4px_0_rgba(0,0,0,0.45)]";
+  "bg-[#C0C0C0] text-[#0b0b0e] border-2 border-t-[#FFFFFF] border-l-[#FFFFFF] border-r-[#2b2b2b] border-b-[#2b2b2b] shadow-[4px_4px_0_rgba(0,0,0,0.45)] font-jetbrains";
 const winInset =
   "bg-white text-[#0b0b0e] border-2 border-t-[#555555] border-l-[#555555] border-r-[#FFFFFF] border-b-[#FFFFFF]";
 const winBtn =
-  "bg-[#C0C0C0] text-[#0b0b0e] border-2 border-t-[#FFFFFF] border-l-[#FFFFFF] border-r-[#2b2b2b] border-b-[#2b2b2b] active:border-t-[#2b2b2b] active:border-l-[#2b2b2b] active:border-r-[#FFFFFF] active:border-b-[#FFFFFF] active:translate-y-[1px] px-3 py-1 text-xs font-mono font-bold select-none";
+  "bg-[#C0C0C0] text-[#0b0b0e] border-2 border-t-[#FFFFFF] border-l-[#FFFFFF] border-r-[#2b2b2b] border-b-[#2b2b2b] active:border-t-[#2b2b2b] active:border-l-[#2b2b2b] active:border-r-[#FFFFFF] active:border-b-[#FFFFFF] active:translate-y-[1px] px-3 py-1 text-xs font-pixel font-bold select-none";
 
 const osCopy: Record<
   Lang,
@@ -123,19 +123,19 @@ const osCopy: Record<
 function WinBar({ title, accent = "from-[#000080] to-[#1084d0]" }: { title: string; accent?: string }) {
   return (
     <div className={`flex items-center justify-between bg-gradient-to-r ${accent} px-2.5 py-1.5 text-white select-none`}>
-      <div className="flex items-center gap-2 truncate font-mono text-xs font-bold tracking-wide">
+      <div className="flex items-center gap-2 truncate font-pixel text-xs sm:text-sm font-bold tracking-wider">
         <span className="inline-block h-3 w-3 bg-[#FFF3A8] border border-black" />
         <span className="truncate">{title}</span>
       </div>
       <div className="flex items-center gap-1 shrink-0">
         <span className="flex h-4 w-4 items-center justify-center bg-[#C0C0C0] text-[10px] font-bold text-black border border-t-white border-l-white border-r-black border-b-black">
-          _
+          –
         </span>
         <span className="flex h-4 w-4 items-center justify-center bg-[#C0C0C0] text-[10px] font-bold text-black border border-t-white border-l-white border-r-black border-b-black">
           □
         </span>
         <span className="flex h-4 w-4 items-center justify-center bg-[#C0C0C0] text-[10px] font-bold text-black border border-t-white border-l-white border-r-black border-b-black">
-          ×
+          ✕
         </span>
       </div>
     </div>
@@ -422,24 +422,24 @@ export default function AboutPage() {
             <div className="p-4 sm:p-6 space-y-5">
               <div className="grid sm:grid-cols-[150px_1fr] gap-5 items-center">
                 {/* Пиксельная/ретро рамка с аватаром */}
-                <div className={`${winInset} relative aspect-square bg-[#181c26] overflow-hidden flex items-end justify-center`}>
+                <div className={`${winInset} relative aspect-square max-w-[200px] mx-auto sm:mx-0 w-full bg-[#181c26] overflow-hidden flex items-end justify-center`}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/me.png" alt="Beibarys" className="h-[96%] w-auto object-contain" />
-                  <span className="absolute bottom-1 right-1 bg-[#1FAF5A] text-white font-mono text-[9px] px-1.5 py-0.5">
+                  <span className="absolute bottom-1 right-1 bg-[#1FAF5A] text-white font-pixel text-xs px-2 py-0.5">
                     ONLINE
                   </span>
                 </div>
 
                 <div className="space-y-2.5">
-                  <div className="inline-block bg-[#000080] text-white font-mono text-[10px] sm:text-xs px-2.5 py-1 font-bold">
+                  <div className="inline-block bg-[#000080] text-white font-pixel text-xs sm:text-sm px-2.5 py-1 font-bold tracking-wide">
                     {os.roleBadge}
                   </div>
-                  <h1 className="text-2xl sm:text-4xl font-bold tracking-tight leading-tight">
+                  <h1 className="text-2xl sm:text-4xl font-unbounded font-bold tracking-tight leading-tight">
                     {a.heroLines.join(" ")}
                   </h1>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1.5 font-jetbrains">
                     {a.tags.map((t) => (
-                      <span key={t} className="bg-white border border-black/40 px-2 py-0.5 font-mono text-xs">
+                      <span key={t} className="bg-white border border-black/40 px-2 py-0.5 text-xs">
                         {t}
                       </span>
                     ))}
@@ -454,11 +454,11 @@ export default function AboutPage() {
 
               {/* Фирменный слоган про LEGO с детства */}
               <div className="bg-[#FFF3A8] border-2 border-black p-4 shadow-[3px_3px_0_#000]">
-                <div className="font-mono text-xs font-bold uppercase text-[#1c34b9] mb-1">
-                  🧱 LEGO PHILOSOPHY // SLOGAN.TXT
+                <div className="font-pixel text-xs sm:text-sm font-bold uppercase text-[#1c34b9] mb-1">
+                  [!] LEGO PHILOSOPHY // SLOGAN.TXT
                 </div>
-                <div className="text-base sm:text-lg font-bold text-[#111]">{os.sloganTitle}</div>
-                <p className="mt-1 text-xs sm:text-sm text-[#222] leading-relaxed">{os.sloganSub}</p>
+                <div className="text-base sm:text-lg font-bold text-[#111] font-unbounded">{os.sloganTitle}</div>
+                <p className="mt-1 text-xs sm:text-sm text-[#222] leading-relaxed font-jetbrains">{os.sloganSub}</p>
               </div>
             </div>
           </div>
@@ -470,11 +470,11 @@ export default function AboutPage() {
               <div className="p-4 grid grid-cols-2 gap-3">
                 {a.stats.map((s, i) => (
                   <div key={i} className={`${winInset} p-3`}>
-                    <div className="font-mono text-3xl sm:text-4xl font-bold text-[#000080]">
+                    <div className="font-unbounded text-2xl sm:text-3xl font-bold text-[#000080]">
                       {s.n}
                       {s.suffix}
                     </div>
-                    <div className="mt-1 font-mono text-[11px] text-[#333] uppercase">{s.label}</div>
+                    <div className="mt-1 font-jetbrains text-[11px] text-[#333] uppercase">{s.label}</div>
                     {/* Ретро прогресс-бар */}
                     <div className="mt-2 h-2 w-full bg-[#ddd] border border-black/40 overflow-hidden flex gap-0.5 p-0.5">
                       {Array.from({ length: 8 }).map((_, b) => (
@@ -552,18 +552,28 @@ export default function AboutPage() {
                 href={site.whatsapp}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-between bg-[#1FAF5A] text-white font-mono text-xs sm:text-sm font-bold px-4 py-3 border-2 border-black shadow-[3px_3px_0_#000] hover:translate-y-[-1px] transition-transform"
+                className="flex items-center justify-between bg-[#1FAF5A] text-white font-jetbrains text-xs sm:text-sm font-bold px-4 py-3 border-2 border-black shadow-[3px_3px_0_#000] hover:translate-y-[-1px] transition-transform"
               >
-                <span>💬 {os.writeWa}</span>
+                <div className="flex items-center gap-2">
+                  <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.074-1.802-.411-1.393-.578-2.29-1.996-2.36-2.09-.07-.094-.564-.75-.564-1.429 0-.678.354-1.013.48-1.144.125-.132.272-.165.362-.165.09 0 .181.001.26.006.084.004.195-.032.304.232.114.275.39 1.013.424 1.082.034.07.057.152.012.243-.045.09-.068.146-.135.225-.068.079-.142.176-.204.237-.068.068-.139.141-.06.277.08.135.352.58.756.94.519.463.957.606 1.093.674.135.068.215.057.294-.034.08-.09.34-.395.43-.531.09-.135.181-.113.304-.068.125.045.79.373.926.441.136.068.226.102.26.158.034.057.034.339-.11.744z"/>
+                  </svg>
+                  <span>{os.writeWa}</span>
+                </div>
                 <span>↗</span>
               </a>
               <a
                 href={site.telegram}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-between bg-[#229ED9] text-white font-mono text-xs sm:text-sm font-bold px-4 py-3 border-2 border-black shadow-[3px_3px_0_#000] hover:translate-y-[-1px] transition-transform"
+                className="flex items-center justify-between bg-[#229ED9] text-white font-jetbrains text-xs sm:text-sm font-bold px-4 py-3 border-2 border-black shadow-[3px_3px_0_#000] hover:translate-y-[-1px] transition-transform"
               >
-                <span>✈️ {os.writeTg}</span>
+                <div className="flex items-center gap-2">
+                  <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                  </svg>
+                  <span>{os.writeTg}</span>
+                </div>
                 <span>↗</span>
               </a>
               <div className="pt-1 font-mono text-xs text-[#222]">
@@ -575,21 +585,22 @@ export default function AboutPage() {
       </div>
 
       {/* Нижняя фиксированная панель задач в стиле Windows 98 */}
-      <div className="fixed bottom-0 inset-x-0 z-40 h-10 bg-[#C0C0C0] border-t-2 border-white px-2 flex items-center justify-between font-mono text-xs text-black select-none">
+      <div className="fixed bottom-0 inset-x-0 z-40 h-11 bg-[#C0C0C0] border-t-2 border-white px-2.5 flex items-center justify-between font-pixel text-xs text-black select-none shadow-[0_-2px_10px_rgba(0,0,0,0.3)]">
         <div className="flex items-center gap-2">
-          <Link href="/" className={`${winBtn} flex items-center gap-1.5 !py-0.5`}>
-            <span className="inline-block h-3 w-3 bg-[#4B5BFF]" />
-            <span>{os.startBtn}</span>
+          <Link href="/" className={`${winBtn} flex items-center gap-1.5 !py-1`}>
+            <span className="inline-block h-3.5 w-3.5 bg-[#4B5BFF]" />
+            <span className="text-sm">{os.startBtn}</span>
           </Link>
-          <span className="hidden sm:inline-block bg-white/70 border border-black/40 px-2.5 py-0.5 truncate">
-            🧱 {os.winBio}
+          <span className="hidden sm:inline-block bg-white/70 border border-black/40 px-2.5 py-0.5 truncate font-jetbrains text-[11px]">
+            {os.winBio}
           </span>
-          <span className="hidden md:inline-block bg-white/70 border border-black/40 px-2.5 py-0.5 truncate">
-            📸 {os.winGallery}
+          <span className="hidden md:inline-block bg-white/70 border border-black/40 px-2.5 py-0.5 truncate font-jetbrains text-[11px]">
+            {os.winGallery}
           </span>
         </div>
-        <div className={`${winInset} px-2.5 py-0.5 text-[11px] font-bold`}>
-          🔊 {clock}
+        <div className={`${winInset} px-2.5 py-0.5 text-xs font-bold font-jetbrains flex items-center gap-2`}>
+          <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span>{clock}</span>
         </div>
       </div>
     </div>

@@ -295,7 +295,7 @@ export default function Contact() {
 
             {/* Проступающие «рукописные» контакты по мере рисования ручкой */}
             <div
-              className="relative z-20 pl-6 sm:pl-8 space-y-3.5 transition-all duration-300"
+              className="relative z-20 pl-6 sm:pl-8 space-y-3.5 transition-all duration-300 font-caveat text-xl"
               style={{
                 opacity: Math.max(0.12, fullReveal),
                 filter: `blur(${Math.max(0, (1 - fullReveal) * 5)}px)`,
@@ -303,13 +303,13 @@ export default function Contact() {
                 pointerEvents: revealed ? "auto" : "none",
               }}
             >
-              <div className="text-xs font-mono uppercase tracking-wider text-[#1c34b9]/80">
+              <div className="text-base font-caveat font-bold uppercase tracking-wider text-[#1c34b9]/90">
                 ★ {site.name} — Web Designer & Developer (Almaty)
               </div>
 
               {/* Номер для WhatsApp и Telegram */}
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs uppercase font-mono bg-[#1c34b9]/10 text-[#1c34b9] px-2 py-0.5 rounded font-semibold">
+                <span className="text-sm uppercase font-mono bg-[#1c34b9]/10 text-[#1c34b9] px-2 py-0.5 rounded font-semibold">
                   TEL / WA / TG:
                 </span>
                 <a
@@ -317,7 +317,7 @@ export default function Contact() {
                   target="_blank"
                   rel="noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="text-xl sm:text-2xl font-bold tracking-tight text-[#1c34b9] underline decoration-wavy decoration-[#1c34b9]/50 hover:text-accent"
+                  className="text-2xl sm:text-3xl font-bold font-caveat tracking-tight text-[#1c34b9] underline decoration-wavy decoration-[#1c34b9]/50 hover:text-accent"
                 >
                   8 775 938 60 67
                 </a>
@@ -334,43 +334,54 @@ export default function Contact() {
               </div>
 
               {/* Быстрые кнопки прямо на листочке */}
-              <div className="flex flex-wrap gap-2 pt-1">
+              <div className="flex flex-wrap gap-2 pt-1 font-sans">
                 <a
                   href={site.whatsapp}
                   target="_blank"
                   rel="noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-[#1FAF5A] text-white px-4 py-1.5 text-xs sm:text-sm font-medium shadow hover:scale-105 transition-transform"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#1FAF5A] text-white px-4 py-2 text-xs sm:text-sm font-semibold shadow hover:scale-105 transition-transform"
                 >
-                  <span>💬 WhatsApp</span>
-                  <span>↗</span>
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.074-1.802-.411-1.393-.578-2.29-1.996-2.36-2.09-.07-.094-.564-.75-.564-1.429 0-.678.354-1.013.48-1.144.125-.132.272-.165.362-.165.09 0 .181.001.26.006.084.004.195-.032.304.232.114.275.39 1.013.424 1.082.034.07.057.152.012.243-.045.09-.068.146-.135.225-.068.079-.142.176-.204.237-.068.068-.139.141-.06.277.08.135.352.58.756.94.519.463.957.606 1.093.674.135.068.215.057.294-.034.08-.09.34-.395.43-.531.09-.135.181-.113.304-.068.125.045.79.373.926.441.136.068.226.102.26.158.034.057.034.339-.11.744z"/>
+                  </svg>
+                  <span>WhatsApp</span>
+                  <span className="text-xs">↗</span>
                 </a>
                 <a
                   href={site.telegram}
                   target="_blank"
                   rel="noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-[#229ED9] text-white px-4 py-1.5 text-xs sm:text-sm font-medium shadow hover:scale-105 transition-transform"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#229ED9] text-white px-4 py-2 text-xs sm:text-sm font-semibold shadow hover:scale-105 transition-transform"
                 >
-                  <span>✈️ Telegram</span>
-                  <span>↗</span>
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                  </svg>
+                  <span>Telegram</span>
+                  <span className="text-xs">↗</span>
                 </a>
                 <a
                   href={site.instagram}
                   onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white px-4 py-1.5 text-xs sm:text-sm font-medium shadow hover:scale-105 transition-transform"
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white px-4 py-2 text-xs sm:text-sm font-semibold shadow hover:scale-105 transition-transform"
                 >
-                  <span>📸 Instagram</span>
+                  <svg className="w-4 h-4 fill-none stroke-current stroke-[2]" viewBox="0 0 24 24">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                  </svg>
+                  <span>Instagram</span>
                 </a>
               </div>
 
               {/* Почта */}
-              <div className="pt-2 border-t border-[#182038]/15 flex flex-wrap items-center gap-2 text-sm">
+              <div className="pt-2 border-t border-[#182038]/15 flex flex-wrap items-center gap-2 text-base font-caveat">
                 <span className="font-mono text-xs text-[#182038]/60">EMAIL:</span>
                 <a
                   href={`mailto:${site.email}`}
                   onClick={(e) => e.stopPropagation()}
-                  className="font-semibold text-[#1c34b9] underline underline-offset-4"
+                  className="font-bold text-[#1c34b9] text-xl underline underline-offset-4"
                 >
                   {site.email}
                 </a>
@@ -387,8 +398,8 @@ export default function Contact() {
               </div>
 
               {/* Слоган про LEGO */}
-              <div className="pt-2 text-xs italic text-[#182038]/75">
-                «🧱 С детства собираю LEGO — а сегодня собираю сайты деталь за деталью»
+              <div className="pt-2 text-lg font-caveat font-semibold text-[#182038]/85">
+                «С детства собираю LEGO — а сегодня собираю сайты деталь за деталью»
               </div>
             </div>
 
@@ -453,7 +464,7 @@ export default function Contact() {
         </div>
 
         {/* ПРАВАЯ КОЛОНКА: Прямые крупные карточки мессенджеров (акцент на WhatsApp, Telegram и Instagram) */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 font-sans">
           <a
             href={site.whatsapp}
             target="_blank"
@@ -461,8 +472,10 @@ export default function Contact() {
             className="group flex items-center justify-between rounded-2xl border border-emerald-400/35 bg-gradient-to-r from-emerald-500/20 to-emerald-500/5 hover:from-emerald-500 hover:to-emerald-600 p-6 transition-all duration-300 shadow-lg"
           >
             <div className="flex items-center gap-4">
-              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-emerald-500 text-2xl text-white shadow-md group-hover:bg-white group-hover:text-emerald-600 transition-colors">
-                💬
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-md group-hover:bg-white group-hover:text-emerald-600 transition-colors">
+                <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.074-1.802-.411-1.393-.578-2.29-1.996-2.36-2.09-.07-.094-.564-.75-.564-1.429 0-.678.354-1.013.48-1.144.125-.132.272-.165.362-.165.09 0 .181.001.26.006.084.004.195-.032.304.232.114.275.39 1.013.424 1.082.034.07.057.152.012.243-.045.09-.068.146-.135.225-.068.079-.142.176-.204.237-.068.068-.139.141-.06.277.08.135.352.58.756.94.519.463.957.606 1.093.674.135.068.215.057.294-.034.08-.09.34-.395.43-.531.09-.135.181-.113.304-.068.125.045.79.373.926.441.136.068.226.102.26.158.034.057.034.339-.11.744z"/>
+                </svg>
               </span>
               <div>
                 <div className="text-2xl md:text-3xl font-medium tracking-tight text-white">
@@ -485,8 +498,10 @@ export default function Contact() {
             className="group flex items-center justify-between rounded-2xl border border-sky-400/35 bg-gradient-to-r from-sky-500/20 to-sky-500/5 hover:from-sky-500 hover:to-sky-600 p-6 transition-all duration-300 shadow-lg"
           >
             <div className="flex items-center gap-4">
-              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-sky-500 text-2xl text-white shadow-md group-hover:bg-white group-hover:text-sky-600 transition-colors">
-                ✈️
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-sky-500 text-white shadow-md group-hover:bg-white group-hover:text-sky-600 transition-colors">
+                <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                </svg>
               </span>
               <div>
                 <div className="text-2xl md:text-3xl font-medium tracking-tight text-white">
@@ -507,8 +522,12 @@ export default function Contact() {
             className="group flex items-center justify-between rounded-2xl border border-pink-400/35 bg-gradient-to-r from-pink-500/15 via-purple-500/10 to-amber-500/10 hover:from-pink-500 hover:to-amber-500 p-6 transition-all duration-300 shadow-lg"
           >
             <div className="flex items-center gap-4">
-              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600 text-2xl text-white shadow-md">
-                📸
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600 text-white shadow-md">
+                <svg className="w-7 h-7 fill-none stroke-current stroke-[2]" viewBox="0 0 24 24">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                </svg>
               </span>
               <div>
                 <div className="text-2xl md:text-3xl font-medium tracking-tight text-white">

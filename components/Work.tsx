@@ -48,8 +48,16 @@ export default function Work() {
           <li key={p.slug} onMouseEnter={() => setActive(i)} className="border-b border-ink/15">
             <Reveal>
               <a href={`#${p.slug}`} data-cursor={ui.viewCase} onClick={(e) => { e.preventDefault(); setOpen(i); }} className={`group flex items-center justify-between py-8 md:py-12 transition-opacity duration-300 ${active !== null && active !== i ? "opacity-30" : "opacity-100"}`}>
-                <h3 className={`text-6xl md:text-[9vw] leading-none tracking-tighter transition-transform duration-500 ${active === i ? "md:translate-x-6" : ""}`}><RollText step={25}>{p.title}</RollText></h3>
-                <span className="hidden md:block text-base w-64"><RollText step={10}>{t.categories[i % t.categories.length]}</RollText></span>
+                <h3 className={`font-unbounded font-bold text-5xl md:text-[8vw] leading-none tracking-tight transition-transform duration-500 ${active === i ? "md:translate-x-6 text-accent" : ""}`}><RollText step={25}>{p.title}</RollText></h3>
+                <div className="flex items-center gap-4">
+                  <span className="hidden md:block text-base w-64 text-ink/70"><RollText step={10}>{t.categories[i % t.categories.length]}</RollText></span>
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-ink/20 group-hover:border-accent group-hover:bg-accent group-hover:text-white transition-all">
+                    <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="7" y1="17" x2="17" y2="7" />
+                      <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                  </span>
+                </div>
               </a>
             </Reveal>
           </li>

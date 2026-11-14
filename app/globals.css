@@ -1,9 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=JetBrains+Mono:wght@400;500;700&family=Pixelify+Sans:wght@500;600;700&family=Unbounded:wght@400;600;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root { --paper: 243 241 236; --ink: 22 21 26; --sage: 185 190 181; }
 .dark { --paper: 22 21 26; --ink: 243 241 236; --sage: 52 56 54; }
+
+.font-unbounded { font-family: 'Unbounded', sans-serif; }
+.font-pixel { font-family: 'Pixelify Sans', monospace, sans-serif; }
+.font-mono-jb { font-family: 'JetBrains Mono', monospace; }
+.font-caveat { font-family: 'Caveat', cursive, sans-serif; }
+.font-serif-cormorant { font-family: 'Cormorant Garamond', Georgia, serif; }
 
 html { background: rgb(var(--paper)); }
 html.lenis, html.lenis body { height: auto; }

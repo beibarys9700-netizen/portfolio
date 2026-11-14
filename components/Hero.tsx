@@ -115,7 +115,33 @@ export default function Hero() {
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "28%"]);
   const [mood, setMood] = useState(0);
-  const moods = [":)", "✦", "⚡", "🧱"];
+  const moods = [
+    (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+        <line x1="9" y1="9" x2="9.01" y2="9" strokeWidth="2.5" />
+        <line x1="15" y1="9" x2="15.01" y2="9" strokeWidth="2.5" />
+      </svg>
+    ),
+    (
+      <svg className="w-5 h-5 text-amber-300" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2l2.4 7.4h7.6l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4-6.2-4.5h7.6z" />
+      </svg>
+    ),
+    (
+      <svg className="w-5 h-5 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="currentColor" fillOpacity="0.3" />
+      </svg>
+    ),
+    (
+      <svg className="w-5 h-5 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <rect x="3" y="6" width="18" height="15" rx="2" />
+        <circle cx="8" cy="4" r="1.5" fill="currentColor" />
+        <circle cx="16" cy="4" r="1.5" fill="currentColor" />
+      </svg>
+    ),
+  ];
 
   return (
     <section
@@ -147,21 +173,21 @@ export default function Hero() {
         className="pointer-events-none absolute inset-x-0 top-[14%] md:top-[15%] z-[10] flex flex-col gap-1 md:gap-2"
       >
         {/* Главная гигантская бегущая строка имени и роли */}
-        <ScrollVelocityContainer className="font-bold tracking-[-0.04em] leading-[0.9] text-[18vw] md:text-[11.5vw] text-white/90 drop-shadow-[0_12px_35px_rgba(65,55,70,0.28)]">
+        <ScrollVelocityContainer className="font-unbounded font-black tracking-[-0.04em] leading-[0.88] text-[18vw] md:text-[11vw] text-white/95 drop-shadow-[0_14px_40px_rgba(30,25,35,0.4)] uppercase">
           <ScrollVelocityRow baseVelocity={4.5} direction={1}>
             {ui.heroMarquee1}
           </ScrollVelocityRow>
         </ScrollVelocityContainer>
 
         {/* Вторая контр-направленная бегущая строка (контурная + полупрозрачная) */}
-        <ScrollVelocityContainer className="font-semibold tracking-[-0.02em] leading-[0.95] text-[10vw] md:text-[5.5vw] text-white/35">
+        <ScrollVelocityContainer className="font-unbounded font-bold tracking-[-0.02em] leading-[0.95] text-[10vw] md:text-[5.5vw] text-white/35">
           <ScrollVelocityRow baseVelocity={3.2} direction={-1}>
             {ui.heroMarquee2}
           </ScrollVelocityRow>
         </ScrollVelocityContainer>
 
         {/* Третья строка с ключевыми тегами */}
-        <ScrollVelocityContainer className="hidden sm:block font-mono uppercase tracking-[0.18em] text-xs md:text-sm text-white/65 mt-1">
+        <ScrollVelocityContainer className="hidden sm:block font-jetbrains uppercase tracking-[0.2em] text-xs md:text-sm text-white/70 mt-1">
           <ScrollVelocityRow baseVelocity={2.2} direction={1}>
             {ui.heroMarquee3}
           </ScrollVelocityRow>
@@ -300,10 +326,21 @@ export default function Hero() {
           {/* Нижняя правая плашка — быстрый скролл к работам */}
           <a
             href="#work"
-            className="group flex items-center justify-between rounded-xl border border-white/35 bg-black/25 hover:bg-white hover:text-[#16151A] px-4 py-2.5 text-xs md:text-sm font-medium backdrop-blur-md transition-all duration-300 shadow-lg"
+            className="group flex items-center justify-between rounded-xl border border-white/35 bg-black/25 hover:bg-white hover:text-[#16151A] px-4 py-2.5 text-xs md:text-sm font-medium backdrop-blur-md transition-all duration-300 shadow-lg font-mono tracking-tight"
           >
             <span>{ui.heroShare}</span>
-            <span className="transition-transform duration-300 group-hover:translate-y-0.5">↘</span>
+            <svg
+              className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5 group-hover:translate-x-0.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="7" y1="7" x2="17" y2="17" />
+              <polyline points="17 7 17 17 7 17" />
+            </svg>
           </a>
         </div>
       </div>
