@@ -19,7 +19,7 @@ export default function Header() {
   ];
   return (
     <>
-      <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-4 md:px-10 py-4 md:py-6 text-white mix-blend-difference">
+      <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-4 md:px-10 py-3 md:py-6 bg-paper/70 dark:bg-ink/75 backdrop-blur-md border-b border-ink/10 dark:border-paper/10 text-ink dark:text-paper transition-colors">
         <Link href="/" className="group text-sm md:text-lg font-medium"><RollText>{`© Code by ${site.name}`}</RollText></Link>
         <div className="flex items-center gap-3 md:gap-6 text-sm md:text-lg pr-14 md:pr-0">
           <div className="flex gap-1.5 md:gap-2 text-xs md:text-sm">

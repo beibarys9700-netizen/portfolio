@@ -44,7 +44,7 @@ function Mock({ wire }: { wire: boolean }) {
           <div key={it.n} className={wire ? "border border-dashed border-ink/40 p-2" : "rounded-2xl bg-white/5 p-2"}>
             <div className={`h-16 md:h-24 ${wire ? "bg-ink/10" : "rounded-xl"}`} style={wire ? undefined : { background: it.c }} />
             {wire ? <><div className="mt-2 h-2 w-3/4 bg-ink/25" /><div className="mt-1.5 h-2 w-1/3 bg-ink/15" /></>
-              : <div className="mt-2 flex justify-between text-[11px]"><span>{it.n}</span><span className="text-white/60">{it.p}</span></div>}
+              : <div className="mt-2 flex justify-between items-center text-[11px] gap-1"><span>{it.n}</span><span className="text-white/60 whitespace-nowrap">{it.p}</span></div>}
           </div>
         ))}
       </div>

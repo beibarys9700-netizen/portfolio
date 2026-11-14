@@ -139,6 +139,11 @@ function Process({ title, steps }: { title: string; steps: { title: string; text
 export default function AboutPage() {
   const { lang } = useT();
   const a = aboutDict[lang];
+  const [isTouch, setIsTouch] = useState(false);
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window);
+  }, []);
   return (
     <>
       {/* HERO */}
@@ -158,7 +163,7 @@ export default function AboutPage() {
               </div>
             </Reveal>
           </div>
-          <PhotoStage hint={a.hint} />
+          <PhotoStage hint={isTouch ? a.hintTouch : a.hint} />
         </div>
       </section>
 

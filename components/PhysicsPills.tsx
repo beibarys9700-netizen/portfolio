@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Matter from "matter-js";
 import { useT } from "./Providers";
 import { uiDict } from "@/lib/ui";
@@ -11,6 +11,11 @@ export default function PhysicsPills() {
   const { lang } = useT();
   const ui = uiDict[lang];
   const wrap = useRef<HTMLDivElement>(null);
+  const [isTouch, setIsTouch] = useState(false);
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window);
+  }, []);
 
   useEffect(() => {
     const host = wrap.current!;
@@ -77,7 +82,7 @@ export default function PhysicsPills() {
     <div className="mt-24 md:mt-40">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-2">
         <h3 className="text-3xl md:text-5xl tracking-tighter">{ui.playTitle}</h3>
-        <span className="text-xs uppercase tracking-widest text-paper/50">{ui.playHint}</span>
+        <span className="text-xs uppercase tracking-widest text-paper/50">{isTouch ? ui.playHintTouch : ui.playHint}</span>
       </div>
       <div ref={wrap} data-cursor={`✋ ${ui.drag}`}
         className="relative h-[420px] md:h-[520px] w-full overflow-hidden rounded-3xl border border-paper/10 bg-gradient-to-b from-paper/[0.03] to-accent/10 touch-pan-y select-none">

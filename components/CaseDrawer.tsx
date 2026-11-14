@@ -54,16 +54,15 @@ function Stage({ p, mode }: { p: P; mode: "mobile" | "desktop" }) {
             </div>
           </div>
         ) : (
-          // Десктоп-окно
+          // Десктоп-окно: масштабируется строго в w-full aspect-video без обрезаний и наездов
           <div
-            className="relative overflow-hidden bg-black shadow-[0_40px_90px_-20px_rgba(0,0,0,.65)] rounded-xl border border-white/15 mx-auto"
-            style={{ width: "min(540px, 88vw)", height: "min(360px, 58vw)" }}>
+            className="relative overflow-hidden bg-black shadow-[0_40px_90px_-20px_rgba(0,0,0,.65)] rounded-xl border border-white/15 w-[min(620px,100%)] mx-auto aspect-[16/10] max-h-[55vh]">
             <div className="flex h-7 items-center gap-1.5 bg-[#222226] px-3">
               <i className="h-2 w-2 rounded-full bg-[#ff5f57]" /><i className="h-2 w-2 rounded-full bg-[#febc2e]" /><i className="h-2 w-2 rounded-full bg-[#28c840]" />
               <span className="ml-3 truncate rounded bg-black/40 px-3 py-0.5 text-[10px] text-white/50">{p.url.replace("https://", "")}</span>
             </div>
             <div className="relative w-full h-[calc(100%-28px)] overflow-hidden">
-              <div className="absolute inset-0 flex items-end p-5 text-2xl text-white" style={{ background: `linear-gradient(135deg, ${p.color}, #16151A)` }}>
+              <div className="absolute inset-0 flex items-end p-5 text-xl md:text-2xl text-white" style={{ background: `linear-gradient(135deg, ${p.color}, #16151A)` }}>
                 {!loaded && p.title}
               </div>
               {p.url && (
@@ -72,7 +71,7 @@ function Stage({ p, mode }: { p: P; mode: "mobile" | "desktop" }) {
                   style={{
                     width: "1280px",
                     height: "800px",
-                    transform: "scale(calc(min(540px, 88vw) / 1280))",
+                    transform: "scale(calc(min(620px, 100vw - 48px) / 1280))",
                     transformOrigin: "top left",
                     opacity: loaded ? 1 : 0,
                     transition: "opacity .5s",
@@ -127,8 +126,8 @@ export default function CaseDrawer({ index, onClose }: { index: number | null; o
               </div>
               <Stage p={p} mode={mode} />
               <a href={p.url} target="_blank" rel="noreferrer" data-cursor={ui.openLive}
-                className="mb-12 flex items-center justify-between rounded-full bg-accent px-8 py-5 text-lg transition-colors hover:bg-paper hover:text-ink">
-                <span>{ui.openLive}</span><span>{p.url.replace("https://", "")}</span>
+                className="mb-12 flex items-center justify-center gap-3 rounded-full bg-accent px-6 md:px-8 py-4 md:py-5 text-base md:text-lg font-medium transition-colors hover:bg-paper hover:text-ink text-white shadow-lg">
+                <span>{ui.openLive}</span>
               </a>
             </div>
           </motion.aside>

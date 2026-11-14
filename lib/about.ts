@@ -6,6 +6,7 @@ type AboutDict = {
   heroLines: [string, string, string];
   lead: string;
   hint: string;
+  hintTouch: string;
   tags: string[];
   statsTitle: string;
   stats: { n: number; suffix: string; label: string }[];
@@ -29,6 +30,7 @@ export const aboutDict: Record<Lang, AboutDict> = {
     heroLines: ["Design that", "feels alive,", "code that flies."],
     lead: "I'm Beibarys, a freelance web designer and developer based in Almaty. I help brands, e-commerce stores, and local businesses stand out through high-speed interfaces, thoughtful micro-interactions, and clean, scalable code.",
     hint: "Move your cursor over the photo",
+    hintTouch: "Swipe over the photo",
     tags: ["Almaty, KZ", "Freelance", "EN · RU · KK"],
     statsTitle: "In numbers",
     stats: [
@@ -63,6 +65,7 @@ export const aboutDict: Record<Lang, AboutDict> = {
     heroLines: ["Дизайн, который", "оживает, код,", "который летает."],
     lead: "Меня зовут Бейбарыс, я веб-дизайнер и разработчик из Алматы. Помогаю брендам, онлайн-магазинам и локальному бизнесу выделяться за счёт сверхбыстрых интерфейсов, продуманных микроанимаций и чистого кода.",
     hint: "Проведи курсором по фото",
+    hintTouch: "Проведи пальцем по фото",
     tags: ["Алматы, KZ", "Фриланс", "EN · RU · KK"],
     statsTitle: "В цифрах",
     stats: [
@@ -97,6 +100,7 @@ export const aboutDict: Record<Lang, AboutDict> = {
     heroLines: ["Тірі сезілетін", "дизайн, ұшқан", "код."],
     lead: "Менің атым Бейбарыс, Алматылық веб-дизайнер әрі әзірлеушімін. Брендтерге, онлайн-дүкендерге және жергілікті бизнеске жылдам интерфейстер, ұқыпты микроанимациялар және таза код арқылы ерекшеленуге көмектесемін.",
     hint: "Курсорды фотоға жылжытыңыз",
+    hintTouch: "Фотоны саусақпен сипаңыз",
     tags: ["Алматы, KZ", "Фриланс", "EN · RU · KK"],
     statsTitle: "Сандармен",
     stats: [
