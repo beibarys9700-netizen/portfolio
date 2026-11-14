@@ -71,14 +71,14 @@ export default function XRay() {
       </Reveal>
       <Reveal delay={150}>
         <div ref={box} onPointerMove={set} onPointerDown={set} data-cursor={`↔ ${ui.drag}`}
-          className="relative mt-14 aspect-[4/5] sm:aspect-[16/10] w-full select-none overflow-hidden rounded-3xl border border-ink/15 shadow-2xl touch-pan-y">
+          className="relative mt-8 md:mt-14 aspect-[3/4] sm:aspect-[16/10] w-full select-none overflow-hidden rounded-2xl md:rounded-3xl border border-ink/15 shadow-2xl touch-none">
           <Mock wire />
           <div className="absolute inset-0" style={{ clipPath: `inset(0 0 0 ${x}%)` }}><Mock wire={false} /></div>
-          <div className="pointer-events-none absolute inset-y-0 w-px bg-accent" style={{ left: `${x}%` }}>
-            <div className="absolute top-1/2 left-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-accent text-white shadow-xl">↔</div>
+          <div className="pointer-events-none absolute inset-y-0 w-0.5 bg-accent shadow-[0_0_12px_#4B5BFF]" style={{ left: `${x}%` }}>
+            <div className="absolute top-1/2 left-1/2 flex h-10 w-10 md:h-12 md:w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-accent text-white shadow-xl text-xs md:text-sm">↔</div>
           </div>
-          <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-ink px-3 py-1 text-xs text-paper">{ui.wire}</span>
-          <span className="pointer-events-none absolute right-4 top-4 rounded-full bg-accent px-3 py-1 text-xs text-white">{ui.design}</span>
+          <span className="pointer-events-none absolute left-3 top-3 md:left-4 md:top-4 rounded-full bg-ink/90 backdrop-blur px-2.5 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs text-paper">{ui.wire}</span>
+          <span className="pointer-events-none absolute right-3 top-3 md:right-4 md:top-4 rounded-full bg-accent/90 backdrop-blur px-2.5 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs text-white">{ui.design}</span>
         </div>
       </Reveal>
     </section>

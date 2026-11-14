@@ -45,7 +45,7 @@ export default function PhysicsPills() {
     const start = () => { if (started) return; started = true; Composite.add(engine.world, bodies); Runner.run(runner, engine); };
 
     const mouse = Mouse.create(host);
-    // не перехватываем прокрутку страницы колесом
+    // не перехватываем прокрутку страницы колесом и свайпом, чтобы страница нормально скроллилась на мобилках
     const m = mouse as unknown as { element: HTMLElement; mousewheel: EventListener };
     m.element.removeEventListener("wheel", m.mousewheel);
     m.element.removeEventListener("mousewheel", m.mousewheel);
@@ -83,7 +83,7 @@ export default function PhysicsPills() {
         className="relative h-[420px] md:h-[520px] w-full overflow-hidden rounded-3xl border border-paper/10 bg-gradient-to-b from-paper/[0.03] to-accent/10 touch-pan-y select-none">
         {PILLS.map((p, i) => (
           <div key={p} data-pill
-            className="absolute left-0 top-0 whitespace-nowrap rounded-full border border-white/25 bg-white/10 px-6 py-3 text-lg md:text-2xl backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,.35),0_10px_30px_-10px_rgba(0,0,0,.6)]"
+            className="absolute left-0 top-0 whitespace-nowrap rounded-full border border-white/25 bg-white/10 px-4 md:px-6 py-2 md:py-3 text-sm md:text-2xl backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,.35),0_10px_30px_-10px_rgba(0,0,0,.6)] cursor-grab active:cursor-grabbing"
             style={{ transform: `translate3d(-999px,-999px,0)`, color: i % 3 === 0 ? "#B8C0FF" : undefined }}>
             {p}
           </div>

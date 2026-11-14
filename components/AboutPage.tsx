@@ -54,23 +54,23 @@ function PhotoStage({ hint }: { hint: string }) {
           <div className="absolute inset-0 opacity-30 mix-blend-overlay" style={{ backgroundImage: "repeating-linear-gradient(135deg, rgba(255,255,255,.35) 0 1px, transparent 1px 14px)" }} />
         </motion.div>
         {/* вращающаяся круглая надпись */}
-        <div style={{ transform: "translateZ(40px)" }} className="absolute -left-6 top-8 md:-left-14 w-28 h-28 rounded-full bg-accent text-white flex items-center justify-center">
+        <div style={{ transform: "translateZ(40px)" }} className="absolute -left-3 top-4 md:-left-14 md:top-8 w-20 h-20 md:w-28 md:h-28 rounded-full bg-accent text-white flex items-center justify-center pointer-events-none">
           <svg viewBox="0 0 100 100" className="spin-slow absolute inset-0 w-full h-full">
             <defs><path id="c" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" /></defs>
             <text fontSize="10.5" fill="white" letterSpacing="2.5"><textPath href="#c">DESIGN • CODE • MOTION • </textPath></text>
           </svg>
-          <span className="text-2xl">✦</span>
+          <span className="text-lg md:text-2xl">✦</span>
         </div>
         {/* фото */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/me.png" alt="Beibarys" draggable={false}
           style={{ transform: "translateZ(90px)" }}
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[104%] w-auto max-w-none select-none drop-shadow-[0_30px_40px_rgba(0,0,0,.45)]" />
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[98%] md:h-[104%] w-auto max-w-none select-none drop-shadow-[0_30px_40px_rgba(0,0,0,.45)]" />
         {/* стикеры */}
         <motion.div style={{ transform: "translateZ(130px)" }} animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity }}
-          className="absolute right-[-4%] top-[18%] rounded-full bg-paper text-ink px-4 py-2 text-sm shadow-xl">🎸 Guitar</motion.div>
+          className="absolute right-0 md:right-[-4%] top-[18%] rounded-full bg-paper text-ink px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm shadow-xl pointer-events-none">🎸 Guitar</motion.div>
         <motion.div style={{ transform: "translateZ(110px)" }} animate={{ y: [0, 10, 0] }} transition={{ duration: 5, repeat: Infinity }}
-          className="absolute left-[-6%] bottom-[22%] rounded-full bg-paper text-ink px-4 py-2 text-sm shadow-xl">🧱 LEGO</motion.div>
+          className="absolute left-0 md:left-[-6%] bottom-[22%] rounded-full bg-paper text-ink px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm shadow-xl pointer-events-none">🧱 LEGO</motion.div>
       </motion.div>
       <div className="mt-6 text-center text-xs uppercase tracking-widest opacity-60">{hint}</div>
     </div>

@@ -17,11 +17,11 @@ export default function Hero() {
     <section id="top" className="relative h-screen min-h-[640px] bg-sage overflow-hidden text-white">
       <InteractiveBg />
       {/* Персонаж: 3D-карточка (наклон за курсором) + рассыпание на кусочки при наведении */}
-      <div className="absolute inset-x-0 bottom-0 z-10 flex justify-center">
-        <CardContainer containerClassName="py-0">
+      <div className="absolute inset-x-0 bottom-0 z-10 flex justify-center pointer-events-none">
+        <CardContainer containerClassName="py-0 pointer-events-auto">
           <CardBody className="h-auto w-auto">
             <CardItem translateZ={60}>
-              <Disintegrate src={HERO_IMAGE} ratio={HERO_RATIO} style={{ height: "82vh" }} />
+              <Disintegrate src={HERO_IMAGE} ratio={HERO_RATIO} style={{ height: "76vh", maxHeight: "820px" }} />
             </CardItem>
           </CardBody>
         </CardContainer>
@@ -35,18 +35,18 @@ export default function Hero() {
       </div>
 
       {/* плашка локации */}
-      <div className="absolute left-0 top-[48%] z-30 flex items-center gap-5 bg-ink text-paper rounded-r-full pl-10 pr-5 py-5 text-sm md:text-base leading-tight max-w-[300px]">
+      <div className="absolute left-0 top-[40%] md:top-[48%] z-30 flex items-center gap-3 md:gap-5 bg-ink text-paper rounded-r-full pl-6 md:pl-10 pr-4 md:pr-5 py-3 md:py-5 text-xs md:text-base leading-tight max-w-[220px] md:max-w-[300px]">
         <span>{t.location}</span>
-        <span className="shrink-0 w-16 h-16 rounded-full bg-sage flex items-center justify-center">
-          <svg className="spin-slow" width="34" height="34" viewBox="0 0 28 28" fill="none" stroke="rgb(22,21,26)" strokeWidth="1.5">
+        <span className="shrink-0 w-10 h-10 md:w-16 md:h-16 rounded-full bg-sage flex items-center justify-center">
+          <svg className="spin-slow w-5 h-5 md:w-[34px] md:h-[34px]" viewBox="0 0 28 28" fill="none" stroke="rgb(22,21,26)" strokeWidth="1.5">
             <circle cx="14" cy="14" r="12" /><path d="M2 14h24M14 2c-6 6-6 18 0 24M14 2c6 6 6 18 0 24" />
           </svg>
         </span>
       </div>
 
       {/* роль */}
-      <div className="absolute z-[60] pointer-events-none right-6 md:right-[10%] top-[28%] text-3xl md:text-5xl leading-[1.1] tracking-tight">
-        <div className="mb-8 text-3xl">↘</div>
+      <div className="absolute z-[60] pointer-events-none right-4 md:right-[10%] top-[18%] md:top-[28%] text-2xl md:text-5xl leading-[1.1] tracking-tight text-right md:text-left">
+        <div className="mb-2 md:mb-8 text-xl md:text-3xl inline-block md:block">↘</div>
         <div><TextAnimate>{t.role[0]}</TextAnimate></div>
         <div><TextAnimate startDelay={0.6}>{t.role[1]}</TextAnimate></div>
       </div>

@@ -19,12 +19,12 @@ export default function Header() {
   ];
   return (
     <>
-      <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-6 md:px-10 py-6 text-white mix-blend-difference">
-        <Link href="/" className="group text-base md:text-lg"><RollText>{`© Code by ${site.name}`}</RollText></Link>
-        <div className="flex items-center gap-6 text-base md:text-lg">
-          <div className="flex gap-2 text-sm">
+      <header className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-4 md:px-10 py-4 md:py-6 text-white mix-blend-difference">
+        <Link href="/" className="group text-sm md:text-lg font-medium"><RollText>{`© Code by ${site.name}`}</RollText></Link>
+        <div className="flex items-center gap-3 md:gap-6 text-sm md:text-lg pr-14 md:pr-0">
+          <div className="flex gap-1.5 md:gap-2 text-xs md:text-sm">
             {langs.map((l) => (
-              <button key={l} onClick={() => setLang(l)} className={`uppercase transition-opacity ${l === lang ? "opacity-100" : "opacity-50 hover:opacity-100"}`}>{l}</button>
+              <button key={l} onClick={() => setLang(l)} className={`uppercase transition-opacity px-1 py-0.5 ${l === lang ? "opacity-100 font-bold" : "opacity-50 hover:opacity-100"}`}>{l}</button>
             ))}
           </div>
           <SoundToggle />
@@ -37,9 +37,9 @@ export default function Header() {
 
       {/* бургер */}
       <button onClick={() => setOpen(!open)} aria-label={t.menu}
-        className="md:hidden fixed top-16 right-4 z-50 w-14 h-14 rounded-full bg-ink flex flex-col items-center justify-center gap-1.5">
-        <span className={`block w-6 h-px bg-paper transition-transform ${open ? "translate-y-[3.5px] rotate-45" : ""}`} />
-        <span className={`block w-6 h-px bg-paper transition-transform ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`} />
+        className="md:hidden fixed top-5 right-4 z-50 w-12 h-12 rounded-full bg-ink text-paper shadow-lg flex flex-col items-center justify-center gap-1.5 border border-paper/20">
+        <span className={`block w-5 h-0.5 bg-paper transition-transform duration-300 ${open ? "translate-y-[4px] rotate-45" : ""}`} />
+        <span className={`block w-5 h-0.5 bg-paper transition-transform duration-300 ${open ? "-translate-y-[4px] -rotate-45" : ""}`} />
       </button>
       <div className={`fixed inset-0 z-40 bg-ink text-paper flex flex-col justify-center px-8 gap-4 transition-transform duration-700 ease-[cubic-bezier(.7,0,.2,1)] ${open ? "translate-y-0" : "-translate-y-full"}`}>
         {links.map((l) => (
