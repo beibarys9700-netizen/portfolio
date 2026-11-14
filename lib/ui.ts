@@ -5,6 +5,8 @@ export const uiDict: Record<Lang, {
   desktop: string; mobile: string; openLive: string; close: string; caseLabel: string;
   xrayKicker: string; xrayTitle: string; xrayText: string; wire: string; design: string;
   soundOn: string; soundOff: string; playTitle: string; playHint: string; playHintTouch: string;
+  heroMarquee1: string; heroMarquee2: string; heroMarquee3: string;
+  heroCta: string; heroCardTitle: string; heroCardSub: string; heroShare: string; heroCopied: string;
   greetings: string[];
 }> = {
   en: {
@@ -15,6 +17,14 @@ export const uiDict: Record<Lang, {
     wire: "Wireframe", design: "Design",
     soundOn: "Sound on", soundOff: "Sound off", playTitle: "My stack — grab and throw it", playHint: "Drag the capsules with your cursor",
     playHintTouch: "Drag capsules with your finger",
+    heroMarquee1: "BEIBARYS — DESIGNER & DEVELOPER — ",
+    heroMarquee2: "CREATIVE FRONTEND • UI/UX • MOTION • ",
+    heroMarquee3: "DIGITAL CATALOGS • FAST LAUNCH • ALMATY • ",
+    heroCta: "About Beibarys & Studio",
+    heroCardTitle: "DESIGN & CODE CURATED",
+    heroCardSub: "BY BEIBARYS • ALMATY",
+    heroShare: "Explore selected works",
+    heroCopied: "Link copied ✓",
     greetings: ["Сәлем", "Привет", "Hello"],
   },
   ru: {
@@ -25,6 +35,14 @@ export const uiDict: Record<Lang, {
     wire: "Каркас", design: "Дизайн",
     soundOn: "Звук вкл", soundOff: "Звук выкл", playTitle: "Мой стек — хватай и швыряй", playHint: "Тяни капсулы курсором",
     playHintTouch: "Тяни капсулы пальцем",
+    heroMarquee1: "БЕЙБАРЫС — ДИЗАЙНЕР И РАЗРАБОТЧИК — ",
+    heroMarquee2: "КРЕАТИВНЫЙ ФРОНТЕНД • UI/UX • АНИМАЦИИ • ",
+    heroMarquee3: "ЦИФРОВЫЕ КАТАЛОГИ • БЫСТРЫЙ ЗАПУСК • АЛМАТЫ • ",
+    heroCta: "Обо мне и подходе",
+    heroCardTitle: "ДИЗАЙН И КОД СОЗДАНЫ",
+    heroCardSub: "БЕЙБАРЫСОМ • АЛМАТЫ",
+    heroShare: "Смотреть проекты",
+    heroCopied: "Ссылка скопирована ✓",
     greetings: ["Сәлем", "Привет", "Hello"],
   },
   kk: {
@@ -35,6 +53,14 @@ export const uiDict: Record<Lang, {
     wire: "Каркас", design: "Дизайн",
     soundOn: "Дыбыс қосулы", soundOff: "Дыбыс өшірулі", playTitle: "Менің стекім — ұста да лақтыр", playHint: "Капсулаларды курсормен сүйреңіз",
     playHintTouch: "Капсулаларды саусақпен сүйреңіз",
+    heroMarquee1: "БЕЙБАРЫС — ДИЗАЙНЕР ЖӘНЕ ӘЗІРЛЕУШІ — ",
+    heroMarquee2: "КРЕАТИВТІ ФРОНТЕНД • UI/UX • АНИМАЦИЯ • ",
+    heroMarquee3: "ЦИФРЛЫҚ КАТАЛОГТАР • ЖЫЛДАМ ІСКЕ ҚОСУ • АЛМАТЫ • ",
+    heroCta: "Мен туралы толығырақ",
+    heroCardTitle: "ДИЗАЙН МЕН КОД АВТОРЫ",
+    heroCardSub: "БЕЙБАРЫС • АЛМАТЫ",
+    heroShare: "Жұмыстарды көру",
+    heroCopied: "Сілтеме көшірілді ✓",
     greetings: ["Сәлем", "Привет", "Hello"],
   },
 };
