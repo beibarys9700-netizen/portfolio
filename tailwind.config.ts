@@ -6,6 +6,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         unbounded: ["Unbounded", "sans-serif"],
+        tektur: ["Tektur", "sans-serif"],
         pixel: ["Pixelify Sans", "monospace", "sans-serif"],
         jetbrains: ["JetBrains Mono", "monospace"],
         caveat: ["Caveat", "cursive", "sans-serif"],

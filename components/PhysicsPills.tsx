@@ -84,7 +84,7 @@ export default function PhysicsPills() {
         <h3 className="text-3xl md:text-5xl tracking-tighter">{ui.playTitle}</h3>
         <span className="text-xs uppercase tracking-widest text-paper/50">{isTouch ? ui.playHintTouch : ui.playHint}</span>
       </div>
-      <div ref={wrap} data-cursor={`✋ ${ui.drag}`}
+      <div ref={wrap} data-cursor={ui.drag}
         className="relative h-[420px] md:h-[520px] w-full overflow-hidden rounded-3xl border border-paper/10 bg-gradient-to-b from-paper/[0.03] to-accent/10 touch-pan-y select-none">
         {PILLS.map((p, i) => (
           <div key={p} data-pill

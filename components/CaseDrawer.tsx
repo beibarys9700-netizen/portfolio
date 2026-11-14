@@ -68,9 +68,9 @@ function MiniInteractiveDemo({ p, lang }: { p: Project; lang: Lang }) {
     const cur = swatches[bagColor];
     return (
       <div className="relative overflow-hidden rounded-2xl border border-paper/15 bg-[#161413] p-5 text-white shadow-xl">
-        <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-white/55 mb-4">
-          <span>● REC // NOMADIQUE LOOKBOOK INTERACTION</span>
-          <span>60 FPS</span>
+        <div className="flex items-center justify-between text-[10px] font-tektur uppercase tracking-widest text-white/55 mb-4">
+          <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-rose-500 animate-pulse" /> REC // NOMADIQUE LOOKBOOK INTERACTION</span>
+          <span className="font-mono">60 FPS</span>
         </div>
 
         <div className="grid sm:grid-cols-[1fr_1.15fr] gap-5 items-center">
@@ -108,7 +108,7 @@ function MiniInteractiveDemo({ p, lang }: { p: Project; lang: Lang }) {
             <div className="text-xs uppercase tracking-wider text-white/50">The Atelier Tote</div>
             <div className="flex items-baseline justify-between">
               <div className="text-xl font-medium">{cur.name}</div>
-              <div className="text-lg font-mono text-[#e5d5be]">{cur.price}</div>
+              <div className="text-lg font-tektur font-bold text-[#e5d5be]">{cur.price}</div>
             </div>
 
             <div className="flex items-center gap-2.5 pt-1">
@@ -136,23 +136,20 @@ function MiniInteractiveDemo({ p, lang }: { p: Project; lang: Lang }) {
                 setBagAdded(!bagAdded);
                 playClick("on");
               }}
-              className={`mt-2 w-full rounded-xl py-2.5 text-xs font-semibold uppercase tracking-wider transition-all ${
+              className={`mt-2 w-full rounded-xl py-2.5 text-xs font-semibold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 ${
                 bagAdded
                   ? "bg-emerald-500 text-white"
                   : "bg-white text-black hover:bg-[#e5d5be]"
               }`}
             >
-              {bagAdded
-                ? lang === "ru"
-                  ? "✓ Добавлено в заказ WhatsApp"
-                  : lang === "kk"
-                  ? "✓ WhatsApp тапсырысқа қосылды"
-                  : "✓ Added to WhatsApp Order"
-                : lang === "ru"
-                ? "Добавить в корзину →"
-                : lang === "kk"
-                ? "Себетке қосу →"
-                : "Add to Bag →"}
+              {bagAdded ? (
+                <>
+                  <svg className="w-3.5 h-3.5 stroke-current stroke-[2.5] fill-none" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
+                  <span>{lang === "ru" ? "Добавлено в заказ WhatsApp" : lang === "kk" ? "WhatsApp тапсырысқа қосылды" : "Added to WhatsApp Order"}</span>
+                </>
+              ) : (
+                <span>{lang === "ru" ? "Добавить в корзину →" : lang === "kk" ? "Себетке қосу →" : "Add to Bag →"}</span>
+              )}
             </button>
           </div>
         </div>
@@ -166,9 +163,9 @@ function MiniInteractiveDemo({ p, lang }: { p: Project; lang: Lang }) {
 
   return (
     <div className="relative overflow-hidden rounded-2xl border border-emerald-400/25 bg-[#0c1d15] p-5 text-white shadow-xl">
-      <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-emerald-300/70 mb-4">
-        <span>● REC // GREEN CLEAN LIVE CALCULATOR</span>
-        <span>INTERACTIVE</span>
+      <div className="flex items-center justify-between text-[10px] font-tektur uppercase tracking-widest text-emerald-300/70 mb-4">
+        <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" /> REC // GREEN CLEAN LIVE CALCULATOR</span>
+        <span className="font-mono">INTERACTIVE</span>
       </div>
 
       <div className="grid sm:grid-cols-[1.1fr_0.9fr] gap-5 items-center">
@@ -220,10 +217,13 @@ function MiniInteractiveDemo({ p, lang }: { p: Project; lang: Lang }) {
           <div className="text-[11px] uppercase tracking-wider text-white/55">
             {lang === "ru" ? "Итоговая оценка" : lang === "kk" ? "Жалпы бағасы" : "Estimated Total"}
           </div>
-          <div className="mt-1 text-2xl sm:text-3xl font-bold text-emerald-400 font-mono">
+          <div className="mt-1 text-2xl sm:text-3xl font-bold text-emerald-400 font-tektur">
             {total} ₸
           </div>
-          <div className="mt-1 text-[11px] text-white/50">ECO- средства включены ✓</div>
+          <div className="mt-1 text-[11px] text-white/50 flex items-center justify-center gap-1">
+            <svg className="w-3 h-3 text-emerald-400 stroke-current stroke-[2.5] fill-none" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
+            <span>ECO-средства включены</span>
+          </div>
         </div>
       </div>
     </div>
@@ -276,10 +276,10 @@ export default function CaseDrawer({ index, onClose }: { index: number | null; o
             {/* Шапка кейса */}
             <div className="sticky top-0 z-30 flex items-center justify-between bg-ink/90 px-5 py-4 backdrop-blur-md md:px-10 border-b border-paper/10">
               <div>
-                <div className="text-[11px] uppercase tracking-widest text-paper/50">
+                <div className="text-[11px] uppercase tracking-widest text-paper/50 font-mono">
                   {ui.caseLabel} · 0{(index ?? 0) + 1} · {p.year}
                 </div>
-                <div className="text-2xl font-medium tracking-tight md:text-4xl">{p.title}</div>
+                <div className="text-2xl font-unbounded font-bold tracking-tight md:text-4xl">{p.title}</div>
               </div>
               <div className="flex items-center gap-2.5">
                 <a
@@ -295,7 +295,10 @@ export default function CaseDrawer({ index, onClose }: { index: number | null; o
                   className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-paper/30 text-lg transition-colors hover:bg-accent hover:border-accent"
                   aria-label={ui.close}
                 >
-                  ✕
+                  <svg className="w-4 h-4 stroke-current stroke-[2.2] fill-none" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
                 </button>
               </div>
             </div>
@@ -314,7 +317,9 @@ export default function CaseDrawer({ index, onClose }: { index: number | null; o
                   <div className="mt-4 space-y-1.5">
                     {p.highlights[lang].map((h) => (
                       <div key={h} className="flex items-center gap-2 text-xs md:text-sm text-paper/75">
-                        <span className="text-accent">✦</span>
+                        <svg className="w-3.5 h-3.5 text-accent fill-current shrink-0" viewBox="0 0 24 24">
+                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                        </svg>
                         <span>{h}</span>
                       </div>
                     ))}
@@ -346,7 +351,7 @@ export default function CaseDrawer({ index, onClose }: { index: number | null; o
               {/* 2. МИНИ-ВИДЕО / ИНТЕРАКТИВНОЕ ДЕМО */}
               <div>
                 <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
-                  <div className="text-lg md:text-xl font-medium tracking-tight">{dc.demoTitle}</div>
+                  <div className="text-lg md:text-xl font-unbounded font-bold tracking-tight">{dc.demoTitle}</div>
                   <div className="text-xs text-paper/55">{dc.demoSub}</div>
                 </div>
                 <MiniInteractiveDemo p={p} lang={lang} />
@@ -354,7 +359,7 @@ export default function CaseDrawer({ index, onClose }: { index: number | null; o
 
               {/* 3. СКРИНЫ / КЛЮЧЕВЫЕ ЭКРАНЫ ПРОЕКТА */}
               <div>
-                <div className="text-lg md:text-xl font-medium tracking-tight mb-3">{dc.screensTitle}</div>
+                <div className="text-lg md:text-xl font-unbounded font-bold tracking-tight mb-3">{dc.screensTitle}</div>
                 <div className="grid sm:grid-cols-3 gap-3">
                   {p.screens.map((sc, idx) => (
                     <button
@@ -397,7 +402,7 @@ export default function CaseDrawer({ index, onClose }: { index: number | null; o
               <div>
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                   <div>
-                    <div className="text-lg md:text-xl font-medium tracking-tight">{dc.livePreviewTitle}</div>
+                    <div className="text-lg md:text-xl font-unbounded font-bold tracking-tight">{dc.livePreviewTitle}</div>
                     <div className="text-xs text-paper/55">{dc.interactHint}</div>
                   </div>
                   <div className="inline-flex rounded-full border border-paper/20 p-1 text-xs">

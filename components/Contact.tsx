@@ -34,7 +34,7 @@ const copy: Record<
     noteHintTouch: "Drag your finger with the pen across the yellow note to reveal my contacts",
     noteRevealed: "Contacts written down! Click any link below:",
     clearBtn: "New note",
-    revealAllBtn: "Write instantly ✍️",
+    revealAllBtn: "Write instantly",
     waLabel: "WhatsApp",
     waSub: "Fastest reply · +7 775 938 60 67",
     tgLabel: "Telegram",
@@ -52,7 +52,7 @@ const copy: Record<
     noteHintTouch: "Проведи пальцем с ручкой по жёлтому стикеру — и на нём появятся мои контакты",
     noteRevealed: "Контакты записаны! Нажми, чтобы написать мне:",
     clearBtn: "Чистый лист",
-    revealAllBtn: "Записать сразу ✍️",
+    revealAllBtn: "Записать сразу",
     waLabel: "WhatsApp",
     waSub: "Отвечаю быстрее всего · 8 775 938 60 67",
     tgLabel: "Telegram",
@@ -70,7 +70,7 @@ const copy: Record<
     noteHintTouch: "Сары стикердің үстінен саусақпен жүргізіңіз — байланыс нөмірлерім шығады",
     noteRevealed: "Контактілер жазылды! Хабарласу үшін басыңыз:",
     clearBtn: "Жаңа парақ",
-    revealAllBtn: "Бірден жазу ✍️",
+    revealAllBtn: "Бірден жазу",
     waLabel: "WhatsApp",
     waSub: "Ең жылдам жауап · 8 775 938 60 67",
     tgLabel: "Telegram",
@@ -229,9 +229,12 @@ export default function Contact() {
               {progress < 75 && (
                 <button
                   onClick={instantWrite}
-                  className="rounded-full bg-accent/20 border border-accent/50 px-3.5 py-1 text-xs font-medium text-paper hover:bg-accent transition-colors"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-accent/20 border border-accent/50 px-3.5 py-1 text-xs font-medium text-paper hover:bg-accent transition-colors"
                 >
-                  {c.revealAllBtn}
+                  <svg className="w-3.5 h-3.5 stroke-current stroke-[2] fill-none" viewBox="0 0 24 24">
+                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+                  </svg>
+                  <span>{c.revealAllBtn}</span>
                 </button>
               )}
               {progress > 0 && (
@@ -275,15 +278,23 @@ export default function Contact() {
               <span className="font-mono text-[11px] uppercase tracking-widest text-[#182038]/60">
                 NOTE // {site.name.toUpperCase()}
               </span>
-              <span className="font-mono text-xs font-bold text-[#1c34b9]">
-                {progress}% ✍️
+              <span className="font-mono text-xs font-bold text-[#1c34b9] inline-flex items-center gap-1.5">
+                <span>{progress}%</span>
+                <svg className="w-3.5 h-3.5 stroke-current stroke-[2] fill-none" viewBox="0 0 24 24">
+                  <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+                </svg>
               </span>
             </div>
 
             {/* Подсказка по центру, пока пользователь ещё не начал водить ручкой */}
             {!revealed && (
               <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8">
-                <div className="mb-2 text-3xl animate-bounce">🖊️</div>
+                <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1c34b9]/10 text-[#1c34b9] border border-[#1c34b9]/25 shadow-sm animate-bounce">
+                  <svg className="w-6 h-6 stroke-current stroke-[2] fill-none" viewBox="0 0 24 24">
+                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+                    <line x1="15" y1="5" x2="19" y2="9" />
+                  </svg>
+                </div>
                 <div className="text-lg sm:text-xl font-semibold text-[#182038]/75">
                   {c.noteTitle}
                 </div>
@@ -557,16 +568,20 @@ export default function Contact() {
         </div>
       </div>
 
-      <div className="mt-20 pt-8 border-t border-paper/10 flex flex-wrap justify-between gap-4 text-sm text-paper/60">
-        <div className="flex gap-6">
+      <div className="mt-20 pt-8 border-t border-paper/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-paper/60 font-mono">
+        <div className="flex flex-wrap items-center gap-6">
           {site.socials.map((s) => (
-            <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="hover:text-paper">
+            <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="hover:text-paper transition-colors">
               {s.label}
             </a>
           ))}
         </div>
-        <div>
-          © {new Date().getFullYear()} {site.name}. {t.rights}
+        <div className="flex items-center gap-6">
+          <span>2026 © Edition</span>
+          <span className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span>ALMATY, KZ</span>
+          </span>
         </div>
       </div>
     </footer>

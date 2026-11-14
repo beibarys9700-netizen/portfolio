@@ -169,7 +169,14 @@ function LegoMiniBuilder({ hint, clearLabel }: { hint: string; clearLabel: strin
   return (
     <div className="p-3 sm:p-4 space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
-        <span>🧱 {hint}</span>
+        <span className="flex items-center gap-1.5">
+          <svg className="w-3.5 h-3.5 fill-current text-rose-600 shrink-0" viewBox="0 0 24 24">
+            <rect x="3" y="7" width="18" height="13" rx="2" />
+            <circle cx="8" cy="4.5" r="2" />
+            <circle cx="16" cy="4.5" r="2" />
+          </svg>
+          <span>{hint}</span>
+        </span>
         <button
           type="button"
           onClick={() => {
@@ -262,9 +269,14 @@ function RetroPhotoGallery({
               setView("deck");
               playClick();
             }}
-            className={`${winBtn} ${view === "deck" ? "!bg-[#000080] !text-white" : ""}`}
+            className={`${winBtn} inline-flex items-center gap-1.5 ${view === "deck" ? "!bg-[#000080] !text-white" : ""}`}
           >
-            🃏 3D Stack
+            <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-[2]" viewBox="0 0 24 24">
+              <polygon points="12 2 2 7 12 12 22 7 12 2" />
+              <polyline points="2 17 12 22 22 17" />
+              <polyline points="2 12 12 17 22 12" />
+            </svg>
+            <span>3D Stack</span>
           </button>
           <button
             type="button"
@@ -407,8 +419,13 @@ export default function AboutPage() {
         <Link href="/" className={`${winBtn} inline-flex items-center gap-2 text-xs sm:text-sm`}>
           {os.backHome}
         </Link>
-        <div className="font-mono text-xs text-white/90 bg-black/35 px-3 py-1 border border-white/25">
-          🖥️ {os.osTitle}
+        <div className="font-mono text-xs text-white/90 bg-black/35 px-3 py-1 border border-white/25 inline-flex items-center gap-2">
+          <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-[2]" viewBox="0 0 24 24">
+            <rect x="2" y="3" width="20" height="14" rx="2" />
+            <line x1="8" y1="21" x2="16" y2="21" />
+            <line x1="12" y1="17" x2="12" y2="21" />
+          </svg>
+          <span>{os.osTitle}</span>
         </div>
       </div>
 
@@ -576,8 +593,12 @@ export default function AboutPage() {
                 </div>
                 <span>↗</span>
               </a>
-              <div className="pt-1 font-mono text-xs text-[#222]">
-                📧 {site.email}
+              <div className="pt-1 font-mono text-xs text-[#222] flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-[2]" viewBox="0 0 24 24">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                <span>{site.email}</span>
               </div>
             </div>
           </div>

@@ -14,7 +14,13 @@ export default function About() {
         <Reveal delay={150}><p className="text-paper/75 leading-relaxed text-base md:text-lg">{t.aboutText}</p></Reveal>
         <Reveal delay={250}>
           <div className="rounded-2xl border border-paper/15 bg-paper/[0.04] p-5 flex items-start gap-4">
-            <span className="text-2xl shrink-0">🧱</span>
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent/20 border border-accent/40 text-accent">
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <rect x="3" y="7" width="18" height="13" rx="2" />
+                <circle cx="8" cy="4.5" r="2" />
+                <circle cx="16" cy="4.5" r="2" />
+              </svg>
+            </span>
             <p className="text-sm md:text-base text-paper/85 italic leading-relaxed">{a.funText}</p>
           </div>
         </Reveal>
